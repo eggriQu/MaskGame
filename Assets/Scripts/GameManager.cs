@@ -1,0 +1,44 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
+public class GameManager : MonoBehaviour
+{
+    [SerializeField] private SwipeController swipeController;
+
+    private InputAction next;
+    private InputAction previous;
+
+    private void OnEnable()
+    {
+        next = InputSystem.actions.FindAction("Next");
+        previous = InputSystem.actions.FindAction("Previous");
+
+        next.Enable();
+        next.performed += NextMask;
+        previous.Enable();
+        previous.performed += PreviousMask;
+    }
+
+    public void NextMask(InputAction.CallbackContext context)
+    {
+        swipeController.Next();
+    }
+
+    public void PreviousMask(InputAction.CallbackContext context)
+    {
+        swipeController.Previous();
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

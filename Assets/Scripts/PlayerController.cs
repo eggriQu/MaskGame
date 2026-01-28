@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,6 +17,12 @@ public class PlayerContoller : MonoBehaviour
     [SerializeField] private float gravity;
     public bool isGrounded;
     [SerializeField] private bool isSprinting;
+
+    [Header("Other Variables")]
+    [SerializeField] private SpriteRenderer maskSprite;
+    [SerializeField] private List<Sprite> maskVariants;
+    [SerializeField] private SwipeController maskUI;
+    public int maskType;
 
     [Header("Input Variables")]
     private InputAction move;
@@ -66,9 +74,10 @@ public class PlayerContoller : MonoBehaviour
 
     void CancelJump(InputAction.CallbackContext context)
     {
-        if (!isGrounded)
+        playerRb.gravityScale = gravity;
+        if (playerRb.linearVelocityY > 0)
         {
-            playerRb.gravityScale = gravity;
+            playerRb.AddForce(new Vector2(0, -playerRb.linearVelocityY), ForceMode2D.Impulse);
         }
     }
 
@@ -91,12 +100,28 @@ public class PlayerContoller : MonoBehaviour
     {
         if (isGrounded)
         {
-            playerRb.gravityScale = 1;
+            playerRb.gravityScale = 1.2f;
         }
 
         if (playerRb.linearVelocityY <= 0 && !isGrounded)
         {
             playerRb.gravityScale = gravity;
+        }
+
+        if (maskUI.currentPage == 1)
+        {
+            maskSprite.sprite = maskVariants[0];
+            maskType = 1;
+        }
+        else if (maskUI.currentPage == 2)
+        {
+            maskSprite.sprite = maskVariants[1];
+            maskType = 2;
+        }
+        else if (maskUI.currentPage == 3)
+        {
+            maskSprite.sprite = maskVariants[2];
+            maskType = 3;
         }
     }
 
