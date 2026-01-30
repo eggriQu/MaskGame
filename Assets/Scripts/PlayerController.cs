@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
-public class PlayerContoller : MonoBehaviour
+public class PlayerContoller : MonoBehaviour, IDamagable, IMasked
 {
     [Header("Physics Variables")]
     [SerializeField] private Rigidbody2D playerRb;
@@ -18,11 +19,13 @@ public class PlayerContoller : MonoBehaviour
     public bool isGrounded;
     [SerializeField] private bool isSprinting;
 
-    [Header("Other Variables")]
+    [Header("Mask Variables")]
     [SerializeField] private SpriteRenderer maskSprite;
     [SerializeField] private List<Sprite> maskVariants;
     [SerializeField] private SwipeController maskUI;
     public int maskType;
+    public Mask currentMask;
+    private GameManager gameManager;
 
     [Header("Input Variables")]
     private InputAction move;
@@ -32,7 +35,7 @@ public class PlayerContoller : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 
     private void OnEnable()
@@ -100,7 +103,7 @@ public class PlayerContoller : MonoBehaviour
     {
         if (isGrounded)
         {
-            playerRb.gravityScale = 1.2f;
+            playerRb.gravityScale = 1.6f;
         }
 
         if (playerRb.linearVelocityY <= 0 && !isGrounded)
@@ -111,18 +114,20 @@ public class PlayerContoller : MonoBehaviour
         if (maskUI.currentPage == 1)
         {
             maskSprite.sprite = maskVariants[0];
-            maskType = 1;
+            maskType = 0;
         }
         else if (maskUI.currentPage == 2)
         {
             maskSprite.sprite = maskVariants[1];
-            maskType = 2;
+            maskType = 1;
         }
         else if (maskUI.currentPage == 3)
         {
             maskSprite.sprite = maskVariants[2];
-            maskType = 3;
+            maskType = 2;
         }
+
+        currentMask = gameManager.masks[maskType];
     }
 
     private void FixedUpdate()
@@ -134,5 +139,15 @@ public class PlayerContoller : MonoBehaviour
             smoothDampTime);
 
         playerRb.linearVelocity = new Vector2(smoothedDirection.x * moveSpeed, playerRb.linearVelocity.y);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        
+    }
+
+    public void ChangeMask(int maskIndex)
+    {
+        maskType = currentMask.maskType;
     }
 }

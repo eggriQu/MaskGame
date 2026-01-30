@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -5,6 +7,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private SwipeController swipeController;
+    [SerializeField] private PlayerContoller player;
+    public List<Mask> masks;
 
     private InputAction next;
     private InputAction previous;
