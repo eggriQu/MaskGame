@@ -21,11 +21,14 @@ public class PlayerContoller : MonoBehaviour, IDamagable, IMasked
 
     [Header("Mask Variables")]
     [SerializeField] private SpriteRenderer maskSprite;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private List<Sprite> maskVariants;
     [SerializeField] private SwipeController maskUI;
     public int maskType;
     public Mask currentMask;
     private GameManager gameManager;
+    [SerializeField] private List<Sprite> spriteVariants;
+    [SerializeField] private Animator anim;
 
     [Header("Input Variables")]
     private InputAction move;
@@ -60,11 +63,35 @@ public class PlayerContoller : MonoBehaviour, IDamagable, IMasked
     void Move(InputAction.CallbackContext context)
     {
         moveDirection = context.ReadValue<Vector2>();
+        if (maskType == 0)
+        {
+            anim.Play("Walk_Sad");
+        }
+        else if (maskType == 1)
+        {
+            anim.Play("Walk_Happy");
+        }
+        else if (maskType == 2)
+        {
+            anim.Play("Walk_Mad");
+        }
     }
 
     void StopMoving(InputAction.CallbackContext context)
     {
         moveDirection = Vector2.zero;
+        if (maskType == 0)
+        {
+            anim.Play("Idle_Sad");
+        }
+        else if (maskType == 1)
+        {
+            anim.Play("Idle_Happy");
+        }
+        else if (maskType == 2)
+        {
+            anim.Play("Idle_Mad");
+        }
     }
 
     void Jump(InputAction.CallbackContext context)
@@ -114,16 +141,19 @@ public class PlayerContoller : MonoBehaviour, IDamagable, IMasked
         if (maskUI.currentPage == 1)
         {
             maskSprite.sprite = maskVariants[0];
+            //spriteRenderer.sprite = spriteVariants[0];
             maskType = 0;
         }
         else if (maskUI.currentPage == 2)
         {
             maskSprite.sprite = maskVariants[1];
+            //spriteRenderer.sprite = spriteVariants[1];
             maskType = 1;
         }
         else if (maskUI.currentPage == 3)
         {
             maskSprite.sprite = maskVariants[2];
+            //spriteRenderer.sprite = spriteVariants[2];
             maskType = 2;
         }
 
