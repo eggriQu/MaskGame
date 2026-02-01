@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HostileState : State
 {
-    public HostileState(EnemyAI controller) : base(controller)
+    public HostileState(Entity controller) : base(controller)
     {
 
     }

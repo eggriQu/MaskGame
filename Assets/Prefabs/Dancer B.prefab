@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6879981433146433401}
   - component: {fileID: 8435316516195686330}
   - component: {fileID: 7525575155227770587}
-  - component: {fileID: 3900416786696890527}
+  - component: {fileID: 7822692347894029606}
   m_Layer: 0
   m_Name: Dancer B
   m_TagString: Untagged
@@ -170,7 +170,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &3900416786696890527
+--- !u!114 &7822692347894029606
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,17 +179,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 683903689438639450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d4c7f095fc959541ad22e188dc03d4b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f627f3f89ca68142b844639bf14ccb7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  m_EditorClassIdentifier: Assembly-CSharp::DancerAI
   player: {fileID: 0}
   followDirection: {x: 0, y: 0, z: 0}
   spriteRenderer: {fileID: 3460176807360018862}
-  hostile: 0
-  heroic: 0
+  gameManager: {fileID: 0}
+  rb: {fileID: 7525575155227770587}
   currentMask: {fileID: 11400000, guid: 5ddf7ca18a5c98f48b05c69544854ba5, type: 2}
   maskType: 0
-  rb: {fileID: 7525575155227770587}
+  isMasked: 0
+  hostile: 0
+  scared: 0
+  heroic: 0
 --- !u!1 &2208414369150141890
 GameObject:
   m_ObjectHideFlags: 0

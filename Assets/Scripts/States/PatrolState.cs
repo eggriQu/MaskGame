@@ -4,7 +4,7 @@ public class PatrolState : State
 {
     private int direction;
 
-    public PatrolState(EnemyAI controller) : base(controller)
+    public PatrolState(Entity controller) : base(controller)
     {
         if (Random.Range(0, 2) == 0)
         {

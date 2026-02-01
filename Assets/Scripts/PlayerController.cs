@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
-public class PlayerContoller : MonoBehaviour, IDamagable, IMasked
+public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
 {
     [Header("Physics Variables")]
     [SerializeField] private Rigidbody2D playerRb;
@@ -90,7 +90,7 @@ public class PlayerContoller : MonoBehaviour, IDamagable, IMasked
         }
         else if (maskType == 2)
         {
-            anim.Play("Idle_Mad");
+            anim.Play("Idle_Angry");
         }
     }
 
@@ -174,6 +174,11 @@ public class PlayerContoller : MonoBehaviour, IDamagable, IMasked
     public void TakeDamage(int damage)
     {
         
+    }
+
+    public void Interact()
+    {
+
     }
 
     public void ChangeMask(int maskIndex)

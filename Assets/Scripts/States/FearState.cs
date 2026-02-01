@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FearState : State
 {
-    public FearState(EnemyAI controller) : base(controller)
+    public FearState(Entity controller) : base(controller)
     {
 
     }

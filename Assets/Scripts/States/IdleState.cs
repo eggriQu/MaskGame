@@ -7,9 +7,9 @@ public interface IState
 
 public abstract class State : IState
 {
-    protected EnemyAI controller;
+    protected Entity controller;
 
-    public State(EnemyAI controller)
+    public State(Entity controller)
     {
         this.controller = controller;
     }
@@ -19,7 +19,7 @@ public abstract class State : IState
 
 public class IdleState : State
 {
-    public IdleState(EnemyAI controller) : base(controller)
+    public IdleState(Entity controller) : base(controller)
     {
 
     }
