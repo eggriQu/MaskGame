@@ -1,9 +1,10 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading;
+using UnityEditor.Playables;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
 {
@@ -34,6 +35,7 @@ public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
     private InputAction move;
     private InputAction jump;
     private InputAction sprint;
+    private InputAction ability;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -46,6 +48,7 @@ public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
         move = InputSystem.actions.FindAction("Move");
         jump = InputSystem.actions.FindAction("Jump");
         sprint = InputSystem.actions.FindAction("Sprint");
+        ability = InputSystem.actions.FindAction("Ability");
 
         move.Enable();
         move.performed += Move;
@@ -58,40 +61,19 @@ public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
         sprint.Enable();
         sprint.performed += Sprint;
         sprint.canceled += StopSprinting;
+
+        ability.Enable();
+        ability.performed += Ability;
     }
 
     void Move(InputAction.CallbackContext context)
     {
         moveDirection = context.ReadValue<Vector2>();
-        if (maskType == 0)
-        {
-            anim.Play("Walk_Sad");
-        }
-        else if (maskType == 1)
-        {
-            anim.Play("Walk_Happy");
-        }
-        else if (maskType == 2)
-        {
-            anim.Play("Walk_Mad");
-        }
     }
 
     void StopMoving(InputAction.CallbackContext context)
     {
         moveDirection = Vector2.zero;
-        if (maskType == 0)
-        {
-            anim.Play("Idle_Sad");
-        }
-        else if (maskType == 1)
-        {
-            anim.Play("Idle_Happy");
-        }
-        else if (maskType == 2)
-        {
-            anim.Play("Idle_Angry");
-        }
     }
 
     void Jump(InputAction.CallbackContext context)
@@ -125,6 +107,22 @@ public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
         smoothDampTime = smoothDampTime / 3f;
     }
 
+    void Ability(InputAction.CallbackContext context)
+    {
+        if (maskType == 0)
+        {
+            Debug.Log("WAA");
+        }
+        else if (maskType == 1)
+        {
+            Debug.Log("YAY");
+        }
+        else
+        {
+            Debug.Log("GRR");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -156,8 +154,25 @@ public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
             //spriteRenderer.sprite = spriteVariants[2];
             maskType = 2;
         }
-
         currentMask = gameManager.masks[maskType];
+
+        if (moveDirection.x > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (moveDirection.x < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+
+        if (moveDirection.x != 0)
+        {
+            anim.Play(ChosenAnimation(maskType, false));
+        }
+        else
+        {
+            anim.Play(ChosenAnimation(maskType, true));
+        }
     }
 
     private void FixedUpdate()
@@ -169,6 +184,42 @@ public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
             smoothDampTime);
 
         playerRb.linearVelocity = new Vector2(smoothedDirection.x * moveSpeed, playerRb.linearVelocity.y);
+    }
+
+    string ChosenAnimation(int maskType, bool isIdle)
+    {
+        string animationName = "";
+        if (!isIdle)
+        {
+            switch (maskType)
+            {
+                case 0:
+                    animationName = "Walk_Sad";
+                    break;
+                case 1:
+                    animationName = "Walk_Happy";
+                    break;
+                case 2:
+                    animationName = "Walk_Mad";
+                    break;
+            }
+        }
+        else
+        {
+            switch (maskType)
+            {
+                case 0:
+                    animationName = "Idle_Sad";
+                    break;
+                case 1:
+                    animationName = "Idle_Happy";
+                    break;
+                case 2:
+                    animationName = "Idle_Angry";
+                    break;
+            }
+        }
+        return animationName;
     }
 
     public void TakeDamage(int damage)
