@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
-public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
+public class PlayerController : MonoBehaviour, IInteractable, IMasked
 {
     [Header("Physics Variables")]
     [SerializeField] private Rigidbody2D playerRb;
@@ -34,6 +34,9 @@ public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
     private InputAction move;
     private InputAction jump;
     private InputAction sprint;
+
+    [Header("Mask Powerup Variables")] 
+    private bool hasFalconSuperJump;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -96,9 +99,14 @@ public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
 
     void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded)
+        if (isGrounded && !hasFalconSuperJump)
         {
             playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+        else if (isGrounded && hasFalconSuperJump)
+        {
+            playerRb.AddForce(Vector2.up * jumpForce * 2, ForceMode2D.Impulse);
+            SetFalconSuperJump(false);
         }
     }
 
@@ -184,5 +192,10 @@ public class PlayerContoller : MonoBehaviour, IInteractable, IMasked
     public void ChangeMask(int maskIndex)
     {
         maskType = currentMask.maskType;
+    }
+
+    public void SetFalconSuperJump(bool value)
+    {
+        hasFalconSuperJump = value;
     }
 }

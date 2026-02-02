@@ -15,7 +15,7 @@ public interface IMasked
 
 public abstract class Entity : MonoBehaviour
 {
-    [SerializeField] protected PlayerContoller player;
+    [SerializeField] protected PlayerController player;
     public Vector3 followDirection;
     [SerializeField] protected SpriteRenderer spriteRenderer;
     [SerializeField] protected GameManager gameManager;
@@ -29,7 +29,7 @@ public abstract class Entity : MonoBehaviour
 
     public virtual void Update()
     {
-        player = GameObject.Find("Player").GetComponent<PlayerContoller>();
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         followDirection = player.transform.position - transform.position;
         maskType = currentMask.maskType;
