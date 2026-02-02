@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private SwipeController swipeController;
-    [SerializeField] private PlayerContoller player;
+    [SerializeField] private PlayerController player;
     public List<Mask> masks;
 
     private InputAction next;
