@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class FalconMask : BaseMaskConcrete
 {
-    public FalconMask(string maskName)
+    public FalconMask(Mask maskType)
     {
-        this.maskName = maskName;
+        this.mask = maskType;
     }
     
     public override void OnPickupMask(PlayerController player)
     {
-        Debug.Log(maskName + " collected");
-        player.SetFalconSuperJump(true);
+        Debug.Log(mask.name + " collected");
+        player.SetFalconSuperJump(true, this.mask);
         Destroy(this.gameObject);
     }
 }

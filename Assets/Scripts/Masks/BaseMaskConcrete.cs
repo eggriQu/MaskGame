@@ -11,7 +11,7 @@ public interface IConcreteMask
 [RequireComponent(typeof(BoxCollider2D), typeof(SpriteRenderer))]
 public class BaseMaskConcrete : MonoBehaviour, IConcreteMask
 { 
-    [SerializeField] protected string maskName;
+    public Mask mask;
    
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -23,6 +23,6 @@ public class BaseMaskConcrete : MonoBehaviour, IConcreteMask
     
     public virtual void OnPickupMask(PlayerController player)
     {
-        Debug.Log(maskName + "Collected");
+        Debug.Log(mask.name + "Collected");
     }
 }

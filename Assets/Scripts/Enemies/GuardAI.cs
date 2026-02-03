@@ -32,7 +32,7 @@ public abstract class Entity : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<PlayerController>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         followDirection = player.transform.position - transform.position;
-        maskType = currentMask.maskType;
+        //maskType = currentMask.maskType;
     }
 
     public virtual void ReactToPlayer(bool isExitCollision)

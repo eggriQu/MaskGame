@@ -48,6 +48,46 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
         levelPagesRect.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
     }
 
+    public void JumpPage()
+    {
+        if (currentPage == 2)
+        {
+            Next();
+        }
+        else if (currentPage == 1)
+        {
+            currentPage = currentPage + 2;
+            targetPos += pageStep * 2;
+            MovePage();
+        }
+    }
+
+    public void SprintPage()
+    {
+        if (currentPage == 1)
+        {
+            Next();
+        }
+        else if (currentPage == 3)
+        {
+            Previous();
+        }
+    }
+
+    public void DashPage()
+    {
+        if (currentPage == 2)
+        {
+            Previous();
+        }
+        else if (currentPage == 3)
+        {
+            currentPage = currentPage - 2;
+            targetPos -= pageStep * 2;
+            MovePage();
+        }
+    }
+
     public void OnEndDrag(PointerEventData eventData)
     {
         
@@ -55,23 +95,6 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
 
     void Update()
     {
-        if (currentPage == 1)
-        {
-            maskElements[0].color = new Color(1, 1, 1, 1);
-            maskElements[1].color = new Color(1, 1, 1, 0.35f);
-            maskElements[2].color = new Color(1, 1, 1, 0.35f);
-        }
-        else if (currentPage == 2)
-        {
-            maskElements[0].color = new Color(1, 1, 1, 0.35f);
-            maskElements[1].color = new Color(1, 1, 1, 1);
-            maskElements[2].color = new Color(1, 1, 1, 0.35f);
-        }
-        else if (currentPage == 3)
-        {
-            maskElements[0].color = new Color(1, 1, 1, 0.35f);
-            maskElements[1].color = new Color(1, 1, 1, 0.35f);
-            maskElements[2].color = new Color(1, 1, 1, 1);
-        }
+
     }
 }

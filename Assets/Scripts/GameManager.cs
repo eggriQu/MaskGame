@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SwipeController swipeController;
     [SerializeField] private PlayerController player;
     public List<Mask> masks;
+    [SerializeField] private List<Image> maskIcons;
 
     private InputAction next;
     private InputAction previous;
@@ -32,6 +33,12 @@ public class GameManager : MonoBehaviour
     public void PreviousMask(InputAction.CallbackContext context)
     {
         swipeController.Previous();
+    }
+
+    public void SetJumpMaskPage(Mask mask)
+    {
+        swipeController.JumpPage();
+        maskIcons[0].sprite = mask.maskSprite;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

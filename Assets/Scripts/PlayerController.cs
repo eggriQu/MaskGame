@@ -5,6 +5,7 @@ using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerController : MonoBehaviour, IInteractable, IMasked
 {
@@ -88,7 +89,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         else if (isGrounded && hasFalconSuperJump)
         {
             playerRb.AddForce(Vector2.up * jumpForce * 2, ForceMode2D.Impulse);
-            SetFalconSuperJump(false);
+            SetFalconSuperJump(false, gameManager.masks[3]);
         }
     }
 
@@ -105,14 +106,14 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     {
         isSprinting = true;
         moveSpeed = moveSpeed * 2;
-        smoothDampTime = smoothDampTime * 3f;
+        smoothDampTime = smoothDampTime * 2f;
     }
 
     void StopSprinting(InputAction.CallbackContext context)
     {
         isSprinting = false;
         moveSpeed = moveSpeed / 2;
-        smoothDampTime = smoothDampTime / 3f;
+        smoothDampTime = smoothDampTime / 2f;
     }
 
     void Ability(InputAction.CallbackContext context)
@@ -242,11 +243,12 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
     public void ChangeMask(int maskIndex)
     {
-        maskType = currentMask.maskType;
+        //maskType = currentMask.maskType;
     }
 
-    public void SetFalconSuperJump(bool value)
+    public void SetFalconSuperJump(bool value, Mask mask)
     {
         hasFalconSuperJump = value;
+        gameManager.SetJumpMaskPage(mask);
     }
 }
