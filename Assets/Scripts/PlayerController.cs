@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     [SerializeField] private float gravity;
     public bool isGrounded;
     [SerializeField] private bool isSprinting;
+    [SerializeField] private Vector2 boxSize;
+    [SerializeField] private float castDistance;
+    public LayerMask groundLayer;
 
     [Header("Mask Variables")]
     [SerializeField] private SpriteRenderer maskSprite;
@@ -132,12 +135,31 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         }
     }
 
+    public bool GroundCheck()
+    {
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, groundLayer))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
+    }
+
     // Update is called once per frame
     void Update()
     {
+        isGrounded = GroundCheck();
+
         if (isGrounded)
         {
-            playerRb.gravityScale = 1.6f;
+            playerRb.gravityScale = 1.8f;
         }
 
         if (playerRb.linearVelocityY <= 0 && !isGrounded)
