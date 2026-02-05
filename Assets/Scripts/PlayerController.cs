@@ -92,7 +92,8 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         else if (isGrounded && hasFalconSuperJump)
         {
             playerRb.AddForce(Vector2.up * jumpForce * 2, ForceMode2D.Impulse);
-            SetFalconSuperJump(false, gameManager.masks[3]);
+            SetFalconSuperJump(false);
+            gameManager.SetJumpMaskPage(gameManager.masks[3]);
         }
     }
 
@@ -268,9 +269,8 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         //maskType = currentMask.maskType;
     }
 
-    public void SetFalconSuperJump(bool value, Mask mask)
+    public void SetFalconSuperJump(bool value)
     {
         hasFalconSuperJump = value;
-        gameManager.SetJumpMaskPage(mask);
     }
 }

@@ -41,6 +41,18 @@ public class GameManager : MonoBehaviour
         maskIcons[0].sprite = mask.maskSprite;
     }
 
+    public void SetSprintMaskPage(Mask mask)
+    {
+        swipeController.SprintPage();
+        maskIcons[1].sprite = mask.maskSprite;
+    }
+
+    public void SetDashMaskPage(Mask mask)
+    {
+        swipeController.DashPage();
+        maskIcons[2].sprite = mask.maskSprite;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

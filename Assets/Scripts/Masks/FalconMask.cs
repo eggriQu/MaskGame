@@ -11,7 +11,13 @@ public class FalconMask : BaseMaskConcrete
     public override void OnPickupMask(PlayerController player)
     {
         Debug.Log(mask.name + " collected");
-        player.SetFalconSuperJump(true, this.mask);
+        player.SetFalconSuperJump(true);
+        gameManager.SetJumpMaskPage(mask);
         Destroy(this.gameObject);
+    }
+
+    private void Awake()
+    {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 }

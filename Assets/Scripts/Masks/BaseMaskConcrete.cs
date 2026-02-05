@@ -12,6 +12,7 @@ public interface IConcreteMask
 public class BaseMaskConcrete : MonoBehaviour, IConcreteMask
 { 
     public Mask mask;
+    public GameManager gameManager;
    
     void OnTriggerEnter2D(Collider2D other)
     {
