@@ -1,18 +1,17 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class FalconMask : BaseMaskConcrete
+public class PhaseMask : BaseMaskConcrete
 {
-    public FalconMask(Mask maskType)
+    public PhaseMask(Mask maskType)
     {
         this.mask = maskType;
     }
-    
+
     public override void OnPickupMask(PlayerController player)
     {
         Debug.Log(mask.name + " collected");
         player.MaskAbility(mask);
-        gameManager.SetJumpMaskPage(mask);
+        gameManager.SetDashMaskPage(mask);
         Destroy(this.gameObject);
     }
 

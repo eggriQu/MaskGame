@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEditor.Playables;
@@ -23,6 +24,8 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float castDistance;
     public LayerMask groundLayer;
+    [SerializeField] private Vector2 dashDirection;
+    [SerializeField] private bool isDashing;
 
     [Header("Mask Variables")]
     [SerializeField] private SpriteRenderer maskSprite;
@@ -43,6 +46,8 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
     [Header("Mask Powerup Variables")] 
     private bool hasFalconSuperJump;
+    private bool hasFoxMask;
+    private bool hasPhaseMask;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -76,6 +81,26 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     void Move(InputAction.CallbackContext context)
     {
         moveDirection = context.ReadValue<Vector2>();
+        if (moveDirection.x > 0 && moveDirection.y > 0)
+        {
+            dashDirection = new Vector2(1, 1);
+        }
+        else if (moveDirection.x > 0 && moveDirection.y < 0)
+        {
+            dashDirection = new Vector2(1, -1);
+        }
+        else if (moveDirection.x < 0 && moveDirection.y > 0)
+        {
+            dashDirection = new Vector2(-1, 1);
+        }
+        else if (moveDirection.x < 0 && moveDirection.y < 0)
+        {
+            dashDirection = new Vector2(-1, -1);
+        }
+        else
+        {
+            dashDirection = moveDirection;
+        }
     }
 
     void StopMoving(InputAction.CallbackContext context)
@@ -108,32 +133,54 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
     void Sprint(InputAction.CallbackContext context)
     {
-        isSprinting = true;
-        moveSpeed = moveSpeed * 2;
-        smoothDampTime = smoothDampTime * 2f;
+        if (!hasFoxMask)
+        {
+            isSprinting = true;
+            moveSpeed = 7f;
+            smoothDampTime = smoothDampTime * 1.4f;
+        }
+        else
+        {
+            isSprinting = true;
+            moveSpeed = 10f;
+            smoothDampTime = smoothDampTime * 2f;
+        }
     }
 
     void StopSprinting(InputAction.CallbackContext context)
     {
-        isSprinting = false;
-        moveSpeed = moveSpeed / 2;
-        smoothDampTime = smoothDampTime / 2f;
+        if (!hasFoxMask)
+        {
+            isSprinting = false;
+            moveSpeed = 5f;
+            smoothDampTime = smoothDampTime / 1.4f;
+        }
+        else
+        {
+            isSprinting = false;
+            moveSpeed = 5f;
+            smoothDampTime = smoothDampTime / 2f;
+            hasFoxMask = false;
+            gameManager.SetSprintMaskPage(gameManager.masks[3]);
+        }
     }
 
     void Ability(InputAction.CallbackContext context)
     {
-        if (maskType == 0)
+        if (hasPhaseMask)
         {
-            Debug.Log("WAA");
+            StartCoroutine(SetDashingTimer());
+            playerRb.AddForce(dashDirection * 20, ForceMode2D.Impulse);
         }
-        else if (maskType == 1)
-        {
-            Debug.Log("YAY");
-        }
-        else
-        {
-            Debug.Log("GRR");
-        }
+    }
+
+    IEnumerator SetDashingTimer()
+    {
+        isDashing = true;
+        playerRb.linearVelocity = Vector2.zero;
+        playerRb.gravityScale = 1.8f;
+        yield return new WaitForSeconds(0.3f);
+        isDashing = false;
     }
 
     public bool GroundCheck()
@@ -215,7 +262,14 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
             ref moveDirectionSmoothedVelocity,
             smoothDampTime);
 
-        playerRb.linearVelocity = new Vector2(smoothedDirection.x * moveSpeed, playerRb.linearVelocity.y);
+        if (!isDashing)
+        {
+            playerRb.linearVelocity = new Vector2(smoothedDirection.x * moveSpeed, playerRb.linearVelocity.y);
+        }
+        else
+        {
+            //playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, playerRb.linearVelocity.y);
+        }
     }
 
     string ChosenAnimation(int maskType, bool isIdle)
@@ -262,6 +316,31 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     public void Interact()
     {
 
+    }
+
+    public void MaskAbility(Mask mask)
+    {
+        switch (mask.maskType)
+        {
+            case (0):
+                if (mask == gameManager.masks[0])
+                {
+                    hasFalconSuperJump = true;
+                }
+                break;
+            case (1):
+                if (mask == gameManager.masks[1])
+                {
+                    hasFoxMask = true;
+                }
+                break;
+            case (2):
+                if (mask == gameManager.masks[2])
+                {
+                    hasPhaseMask = true;
+                }
+                break;
+        }
     }
 
     public void ChangeMask(int maskIndex)

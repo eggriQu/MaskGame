@@ -6,5 +6,5 @@ using UnityEngine;
 public class Mask : ScriptableObject
 {
     public Sprite maskSprite;
-    public string maskType;
+    public int maskType;
 }
