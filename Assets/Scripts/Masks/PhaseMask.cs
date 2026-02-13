@@ -11,12 +11,9 @@ public class PhaseMask : BaseMaskConcrete
     {
         Debug.Log(mask.name + " collected");
         player.MaskAbility(mask);
-        gameManager.SetDashMaskPage(mask);
+        UIManager.Instance.SetDashMaskPage(mask);
         Destroy(this.gameObject);
     }
 
-    private void Awake()
-    {
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-    }
+
 }

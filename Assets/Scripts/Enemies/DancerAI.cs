@@ -21,7 +21,7 @@ public class DancerAI : Entity, IInteractable, IMasked
 
     public void ChangeMask(int maskIndex)
     {
-        spriteRenderer.sprite = gameManager.masks[maskIndex].maskSprite;
+        spriteRenderer.sprite = uiManager.masks[maskIndex].maskSprite;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

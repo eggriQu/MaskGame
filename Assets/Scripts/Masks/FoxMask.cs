@@ -11,12 +11,9 @@ public class FoxMask : BaseMaskConcrete
     {
         Debug.Log(mask.name + " collected");
         player.MaskAbility(mask);
-        gameManager.SetSprintMaskPage(mask);
+        UIManager.Instance.SetSprintMaskPage(mask);
         Destroy(this.gameObject);
     }
 
-    private void Awake()
-    {
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
-    }
+
 }

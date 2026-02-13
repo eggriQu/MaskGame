@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     [SerializeField] private SwipeController maskUI;
     public int maskType;
     public Mask currentMask;
-    private GameManager gameManager;
     [SerializeField] private List<Sprite> spriteVariants;
     [SerializeField] private Animator anim;
 
@@ -52,7 +51,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
     }
 
     private void OnEnable()
@@ -118,7 +117,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         {
             playerRb.AddForce(Vector2.up * jumpForce * 2, ForceMode2D.Impulse);
             SetFalconSuperJump(false);
-            gameManager.SetJumpMaskPage(gameManager.masks[3]);
+            UIManager.Instance.SetJumpMaskPage(UIManager.Instance.masks[3]);
         }
     }
 
@@ -161,7 +160,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
             moveSpeed = 5f;
             smoothDampTime = smoothDampTime / 2f;
             hasFoxMask = false;
-            gameManager.SetSprintMaskPage(gameManager.masks[3]);
+            UIManager.Instance.SetSprintMaskPage(UIManager.Instance.masks[3]);
         }
     }
 
@@ -233,7 +232,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
             //spriteRenderer.sprite = spriteVariants[2];
             maskType = 2;
         }
-        currentMask = gameManager.masks[maskType];
+        currentMask = UIManager.Instance.masks[maskType];
 
         if (moveDirection.x > 0)
         {
@@ -323,19 +322,19 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         switch (mask.maskType)
         {
             case (0):
-                if (mask == gameManager.masks[0])
+                if (mask == UIManager.Instance.masks[0])
                 {
                     hasFalconSuperJump = true;
                 }
                 break;
             case (1):
-                if (mask == gameManager.masks[1])
+                if (mask == UIManager.Instance.masks[1])
                 {
                     hasFoxMask = true;
                 }
                 break;
             case (2):
-                if (mask == gameManager.masks[2])
+                if (mask == UIManager.Instance.masks[2])
                 {
                     hasPhaseMask = true;
                 }

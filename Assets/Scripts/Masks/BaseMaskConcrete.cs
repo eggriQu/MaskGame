@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 public interface IConcreteMask
@@ -12,7 +13,6 @@ public interface IConcreteMask
 public class BaseMaskConcrete : MonoBehaviour, IConcreteMask
 { 
     public Mask mask;
-    public GameManager gameManager;
    
     void OnTriggerEnter2D(Collider2D other)
     {

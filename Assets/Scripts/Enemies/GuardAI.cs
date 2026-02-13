@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 public interface IInteractable
 {
@@ -18,7 +19,7 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected PlayerController player;
     public Vector3 followDirection;
     [SerializeField] protected SpriteRenderer spriteRenderer;
-    [SerializeField] protected GameManager gameManager;
+    [FormerlySerializedAs("gameManager")] [SerializeField] protected UIManager uiManager;
     public Rigidbody2D rb;
 
     public Mask currentMask;
@@ -30,7 +31,7 @@ public abstract class Entity : MonoBehaviour
     public virtual void Update()
     {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        uiManager = GameObject.Find("Game Manager").GetComponent<UIManager>();
         followDirection = player.transform.position - transform.position;
         //maskType = currentMask.maskType;
     }
@@ -64,7 +65,7 @@ public class GuardAI : Entity, IInteractable, IMasked
 
     public void ChangeMask(int maskIndex)
     {
-        spriteRenderer.sprite = gameManager.masks[maskIndex].maskSprite;
+        spriteRenderer.sprite = uiManager.masks[maskIndex].maskSprite;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

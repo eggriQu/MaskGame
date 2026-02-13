@@ -12,12 +12,7 @@ public class FalconMask : BaseMaskConcrete
     {
         Debug.Log(mask.name + " collected");
         player.MaskAbility(mask);
-        gameManager.SetJumpMaskPage(mask);
+        UIManager.Instance.SetJumpMaskPage(mask);
         Destroy(this.gameObject);
-    }
-
-    private void Awake()
-    {
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
 }
