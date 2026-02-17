@@ -6,6 +6,7 @@ using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerController : MonoBehaviour, IInteractable, IMasked
@@ -75,6 +76,9 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
         ability.Enable();
         ability.performed += Ability;
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Move(InputAction.CallbackContext context)

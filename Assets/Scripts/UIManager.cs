@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     public List<Mask> masks;
     [SerializeField] private List<Image> maskIcons;
 
+    [SerializeField] private GameObject WinUI;
+
     private InputAction next;
     private InputAction previous;
 
@@ -42,6 +44,13 @@ public class UIManager : MonoBehaviour
         next.performed += NextMask;
         previous.Enable();
         previous.performed += PreviousMask;
+
+        LevelExit.OnLevelExit += InstantiateWinUI;
+    }
+
+    private void OnDisable()
+    {
+        LevelExit.OnLevelExit -= InstantiateWinUI;
     }
 
     public void NextMask(InputAction.CallbackContext context)
@@ -72,15 +81,15 @@ public class UIManager : MonoBehaviour
         maskIcons[2].sprite = mask.maskSprite;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void InstantiateDeathUI()
     {
-        
+        throw new NotImplementedException();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void InstantiateWinUI()
     {
-        
+        Instantiate(WinUI);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }
