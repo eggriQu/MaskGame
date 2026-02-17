@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Enemy_PatrolAI : MonoBehaviour
 {
@@ -50,6 +51,8 @@ public class Enemy_PatrolAI : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Kill player, not yet implemented");
+            //TEMP----------------------------------------------
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
     
