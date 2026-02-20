@@ -1,13 +1,12 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class FalconMask : BaseMaskConcrete
+public class SkullMask : BaseMaskConcrete
 {
-    public FalconMask(Mask maskType)
+    public SkullMask(Mask maskType)
     {
         this.mask = maskType;
     }
-    
+
     public override void OnPickupMask(PlayerController player)
     {
         player.currentMask = mask;

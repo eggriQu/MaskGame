@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2af51bdba0e2bce4aa177a532b71ba79, type: 3}
-  m_Name: Fox Mask
+  m_Name: Skull Mask
   m_EditorClassIdentifier: Assembly-CSharp::Mask
-  maskSprite: {fileID: 21300000, guid: 678c92572cc724845a460c87117f5353, type: 3}
-  maskType: 1
-  breakTime: 4
+  maskSprite: {fileID: 3342455459953554154, guid: 8ff7bbbb2f737ec4ea5685b35203ba07, type: 3}
+  maskType: 0
+  breakTime: 10

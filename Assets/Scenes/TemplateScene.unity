@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sprint
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -312,7 +312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Jump
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1927,7 +1927,7 @@ MonoBehaviour:
   smoothDampTime: 0.1
   moveSpeed: 5
   jumpForce: 20
-  gravity: 3
+  fallingGravity: 3
   isGrounded: 0
   isSprinting: 0
   boxSize: {x: 0.5, y: 0.2}
@@ -1937,6 +1937,8 @@ MonoBehaviour:
     m_Bits: 8
   dashDirection: {x: 0, y: 0}
   isDashing: 0
+  dashForce: 0
+  dashUses: 0
   maskSprite: {fileID: 288251370}
   spriteRenderer: {fileID: 1240556925}
   maskVariants:
@@ -1951,6 +1953,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7b6497827cc2b5342bcbe99393d0b6dc, type: 3}
   - {fileID: 21300000, guid: 26cf0433231acd3469f7a56a62a64ac7, type: 3}
   anim: {fileID: 1240556928}
+  hasFalconSuperJump: 0
+  hasFoxMask: 0
+  hasPhaseMask: 0
 --- !u!50 &1240556923
 Rigidbody2D:
   serializedVersion: 5
@@ -2168,7 +2173,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Dash
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2260,7 +2265,7 @@ GameObject:
   - component: {fileID: 1292345774}
   - component: {fileID: 1292345773}
   m_Layer: 5
-  m_Name: Dash Button
+  m_Name: Dash Uses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2420,6 +2425,10 @@ MonoBehaviour:
   - {fileID: 265471728}
   - {fileID: 1505658555}
   - {fileID: 1815498198}
+  maskTimes:
+  - {fileID: 169932554}
+  - {fileID: 18190918}
+  - {fileID: 1265203834}
   WinUI: {fileID: 1345716817839006248, guid: 6fd013ecb7981ca489e19026b7f94d29, type: 3}
 --- !u!4 &1306538394
 Transform:
@@ -2448,7 +2457,7 @@ GameObject:
   - component: {fileID: 1367515040}
   - component: {fileID: 1367515039}
   m_Layer: 5
-  m_Name: Jump Button
+  m_Name: Jump Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2853,7 +2862,7 @@ GameObject:
   - component: {fileID: 1753811062}
   - component: {fileID: 1753811061}
   m_Layer: 5
-  m_Name: Sprint Button
+  m_Name: Sprint Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

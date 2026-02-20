@@ -9,11 +9,9 @@ public class FoxMask : BaseMaskConcrete
 
     public override void OnPickupMask(PlayerController player)
     {
-        Debug.Log(mask.name + " collected");
+        player.currentMask = mask;
         player.MaskAbility(mask);
         UIManager.Instance.SetSprintMaskPage(mask);
         Destroy(this.gameObject);
     }
-
-
 }

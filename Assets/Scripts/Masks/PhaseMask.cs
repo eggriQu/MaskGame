@@ -9,11 +9,9 @@ public class PhaseMask : BaseMaskConcrete
 
     public override void OnPickupMask(PlayerController player)
     {
-        Debug.Log(mask.name + " collected");
+        player.currentMask = mask;
         player.MaskAbility(mask);
         UIManager.Instance.SetDashMaskPage(mask);
         Destroy(this.gameObject);
     }
-
-
 }

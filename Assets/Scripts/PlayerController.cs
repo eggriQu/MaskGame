@@ -19,14 +19,17 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     [SerializeField] private float smoothDampTime;
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
-    [SerializeField] private float gravity;
+    [SerializeField] private float fallingGravity;
     public bool isGrounded;
     [SerializeField] private bool isSprinting;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float castDistance;
     public LayerMask groundLayer;
     [SerializeField] private Vector2 dashDirection;
-    [SerializeField] private bool isDashing;
+    [SerializeField] public bool isDashing;
+    [SerializeField] private float dashForce;
+    [SerializeField] private float dashUses;
+    [SerializeField] private BoxCollider2D dashCollider;
 
     [Header("Mask Variables")]
     [SerializeField] private SpriteRenderer maskSprite;
@@ -44,10 +47,11 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     private InputAction sprint;
     private InputAction ability;
 
-    [Header("Mask Powerup Variables")] 
-    private bool hasFalconSuperJump;
-    private bool hasFoxMask;
-    private bool hasPhaseMask;
+    [Header("Mask Powerup Variables")]
+    [SerializeField] private bool hasFalconSuperJump;
+    [SerializeField] private bool hasFoxMask;
+    [SerializeField] public bool hasPhaseMask;
+    [SerializeField] private bool hasSkullMask;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -83,7 +87,14 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
     void Move(InputAction.CallbackContext context)
     {
-        moveDirection = context.ReadValue<Vector2>();
+        if (!hasSkullMask)
+        {
+            moveDirection = context.ReadValue<Vector2>();
+        }
+        else
+        {
+            moveDirection = context.ReadValue<Vector2>() * 0.65f;
+        }
         if (moveDirection.x > 0 && moveDirection.y > 0)
         {
             dashDirection = new Vector2(1, 1);
@@ -120,14 +131,12 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         else if (isGrounded && hasFalconSuperJump)
         {
             playerRb.AddForce(Vector2.up * jumpForce * 2, ForceMode2D.Impulse);
-            SetFalconSuperJump(false);
-            UIManager.Instance.SetJumpMaskPage(UIManager.Instance.masks[3]);
         }
     }
 
     void CancelJump(InputAction.CallbackContext context)
     {
-        playerRb.gravityScale = gravity;
+        playerRb.gravityScale = fallingGravity;
         if (playerRb.linearVelocityY > 0)
         {
             playerRb.AddForce(new Vector2(0, -playerRb.linearVelocityY), ForceMode2D.Impulse);
@@ -163,17 +172,17 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
             isSprinting = false;
             moveSpeed = 5f;
             smoothDampTime = smoothDampTime / 2f;
-            hasFoxMask = false;
-            UIManager.Instance.SetSprintMaskPage(UIManager.Instance.masks[3]);
         }
     }
 
     void Ability(InputAction.CallbackContext context)
     {
-        if (hasPhaseMask)
+        if (hasPhaseMask && !isDashing && dashUses > 0)
         {
+            dashUses = dashUses - 1;
             StartCoroutine(SetDashingTimer());
-            playerRb.AddForce(dashDirection * 20, ForceMode2D.Impulse);
+            playerRb.AddForce(dashDirection * dashForce, ForceMode2D.Impulse);
+            UIManager.Instance.SetDashMaskUses(dashUses);
         }
     }
 
@@ -181,9 +190,35 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     {
         isDashing = true;
         playerRb.linearVelocity = Vector2.zero;
-        playerRb.gravityScale = 1.8f;
-        yield return new WaitForSeconds(0.3f);
+        playerRb.gravityScale = 0;
+        dashCollider.size = SetColliderSize(1, 2.5f);
+        if (dashDirection.x > 0)
+        {
+            dashCollider.offset = SetColliderOffset(0.6f, 0);
+        }
+        else if (dashDirection.x < 0)
+        {
+            dashCollider.offset = SetColliderOffset(-0.6f, 0);
+        }
+            yield return new WaitForSeconds(0.3f);
         isDashing = false;
+        dashCollider.size = SetColliderSize(0.2f, 0.2f);
+        dashCollider.offset = SetColliderOffset(0, 0);
+        if (playerRb.linearVelocityY > 0)
+        {
+            playerRb.linearVelocityY = 1;
+        }
+        playerRb.gravityScale = fallingGravity;
+    }
+
+    private Vector2 SetColliderSize(float x, float y)
+    {
+        return new Vector2(x, y);
+    }
+
+    private Vector2 SetColliderOffset(float x, float y)
+    {
+        return new Vector2(x, y);
     }
 
     public bool GroundCheck()
@@ -213,30 +248,30 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
             playerRb.gravityScale = 1.8f;
         }
 
-        if (playerRb.linearVelocityY <= 0 && !isGrounded)
+        if (playerRb.linearVelocityY <= 0 && !isGrounded && !isDashing)
         {
-            playerRb.gravityScale = gravity;
+            playerRb.gravityScale = fallingGravity;
         }
 
-        if (maskUI.currentPage == 1)
-        {
-            maskSprite.sprite = maskVariants[0];
-            //spriteRenderer.sprite = spriteVariants[0];
-            maskType = 0;
-        }
-        else if (maskUI.currentPage == 2)
-        {
-            maskSprite.sprite = maskVariants[1];
-            //spriteRenderer.sprite = spriteVariants[1];
-            maskType = 1;
-        }
-        else if (maskUI.currentPage == 3)
-        {
-            maskSprite.sprite = maskVariants[2];
-            //spriteRenderer.sprite = spriteVariants[2];
-            maskType = 2;
-        }
-        currentMask = UIManager.Instance.masks[maskType];
+//        if (maskUI.currentPage == 1)
+//        {
+//           maskSprite.sprite = maskVariants[0];
+//            //spriteRenderer.sprite = spriteVariants[0];
+//            maskType = 0;
+//        }
+//        else if (maskUI.currentPage == 2)
+//        {
+//            maskSprite.sprite = maskVariants[1];
+//            //spriteRenderer.sprite = spriteVariants[1];
+//            maskType = 1;
+//        }
+//        else if (maskUI.currentPage == 3)
+//       {
+//           maskSprite.sprite = maskVariants[2];
+//            //spriteRenderer.sprite = spriteVariants[2];
+//            maskType = 2;
+//        }
+//        currentMask = UIManager.Instance.masks[maskType];
 
         if (moveDirection.x > 0)
         {
@@ -249,11 +284,11 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
         if (moveDirection.x != 0)
         {
-            anim.Play(ChosenAnimation(maskType, false));
+            anim.Play(ChosenAnimation(1, false));
         }
         else
         {
-            anim.Play(ChosenAnimation(maskType, true));
+            anim.Play(ChosenAnimation(1, true));
         }
     }
 
@@ -313,7 +348,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
     public void TakeDamage(int damage)
     {
-        
+
     }
 
     public void Interact()
@@ -328,21 +363,69 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
             case (0):
                 if (mask == UIManager.Instance.masks[0])
                 {
-                    hasFalconSuperJump = true;
+                    //hasFalconSuperJump = true;
+                    StartCoroutine(MaskTimer(mask, mask.breakTime));
                 }
-                break;
+                else if (mask == UIManager.Instance.masks[4])
+                {
+                    StartCoroutine(MaskTimer(mask, mask.breakTime));
+                }
+                    break;
             case (1):
                 if (mask == UIManager.Instance.masks[1])
                 {
-                    hasFoxMask = true;
+                    //hasFoxMask = true;
+                    StartCoroutine(MaskTimer(mask, mask.breakTime));
                 }
                 break;
             case (2):
                 if (mask == UIManager.Instance.masks[2])
                 {
                     hasPhaseMask = true;
+                    dashUses = mask.breakTime;
+                    UIManager.Instance.SetDashMaskUses(dashUses);
                 }
                 break;
+        }
+    }
+
+    public IEnumerator MaskTimer(Mask mask, float time)
+    {
+        if (mask.maskType == 0 ||  mask.maskType == 1)
+        {
+            StartCoroutine(UIManager.Instance.SetMaskTime(mask));
+            SetMaskVariable(mask, true);
+            yield return new WaitForSeconds(time);
+            SetMaskVariable(mask, false);
+            UIManager.Instance.ZeroMaskTime(mask);
+            if (mask.maskType == 0)
+            {
+                UIManager.Instance.SetJumpMaskPage(UIManager.Instance.masks[3]);
+            }
+            else if (mask.maskType == 1)
+            {
+                UIManager.Instance.SetSprintMaskPage(UIManager.Instance.masks[3]);
+            }
+        }
+    }
+
+    public void SetMaskVariable(Mask mask, bool value)
+    {
+        if (mask == UIManager.Instance.masks[0])
+        {
+            hasFalconSuperJump = value;
+        }
+        else if (mask == UIManager.Instance.masks[1])
+        {
+            hasFoxMask = value;
+        }
+        else if (mask == UIManager.Instance.masks[2])
+        {
+            hasPhaseMask = value;
+        }
+        else if (mask == UIManager.Instance.masks[4])
+        {
+            hasSkullMask = value;
         }
     }
 

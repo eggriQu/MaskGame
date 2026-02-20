@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
+using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private PlayerController player;
     public List<Mask> masks;
     [SerializeField] private List<Image> maskIcons;
+    [SerializeField] private List<TextMeshProUGUI> maskTimes;
 
     [SerializeField] private GameObject WinUI;
 
@@ -79,6 +82,53 @@ public class UIManager : MonoBehaviour
     {
         swipeController.DashPage();
         maskIcons[2].sprite = mask.maskSprite;
+    }
+
+    public IEnumerator SetMaskTime(Mask mask)
+    {
+        float time = mask.breakTime;
+        while (time > 0)
+        {
+            if (mask.maskType == 0)
+            {
+                maskTimes[0].text = "" + time;
+            }
+            else if (mask.maskType == 1)
+            {
+                maskTimes[1].text = "" + time;
+            }
+            time = time - 1;
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    public void SetDashMaskUses(float uses)
+    {
+        if (uses > 0)
+        {
+            maskTimes[2].text = "" + uses;
+        }
+        else
+        {
+            maskTimes[2].text = "";
+            SetDashMaskPage(masks[3]);
+        }
+    }
+
+    public void ZeroMaskTime(Mask mask)
+    {
+        if (mask.maskType == 0)
+        {
+            maskTimes[0].text = "";
+        }
+        else if (mask.maskType == 1)
+        {
+            maskTimes[1].text = "";
+        }
+        else if (mask.maskType == 2)
+        {
+            maskTimes[2].text = "";
+        }
     }
 
     public void InstantiateDeathUI()
