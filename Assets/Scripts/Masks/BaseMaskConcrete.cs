@@ -18,7 +18,14 @@ public class BaseMaskConcrete : MonoBehaviour, IConcreteMask
     {
         if (other.CompareTag("Player"))
         {
-            OnPickupMask(other.gameObject.GetComponent<PlayerController>());
+            if (other.gameObject.GetComponent<PlayerController>() == null)
+            {
+                OnPickupMask(other.gameObject.GetComponentInParent<PlayerController>());
+            }
+            else
+            {
+                OnPickupMask(other.gameObject.GetComponent<PlayerController>());
+            }
         }
     }
     
