@@ -95,32 +95,9 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         }
         else
         {
-            moveDirection = context.ReadValue<Vector2>() * 0.65f;
+            moveDirection = context.ReadValue<Vector2>() * 0.75f;
         }
-        if (moveDirection.x > 0 && moveDirection.y > 0)
-        {
-            dashDirection = new Vector2(1, 1);
-            moveDirection = dashDirection;
-        }
-        else if (moveDirection.x > 0 && moveDirection.y < 0)
-        {
-            dashDirection = new Vector2(1, -1);
-            moveDirection = dashDirection;
-        }
-        else if (moveDirection.x < 0 && moveDirection.y > 0)
-        {
-            dashDirection = new Vector2(-1, 1);
-            moveDirection = dashDirection;
-        }
-        else if (moveDirection.x < 0 && moveDirection.y < 0)
-        {
-            dashDirection = new Vector2(-1, -1);
-            moveDirection = dashDirection;
-        }
-        else
-        {
-            dashDirection = moveDirection;
-        }
+        dashDirection = moveDirection;
     }
 
     void StopMoving(InputAction.CallbackContext context)
@@ -136,7 +113,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         }
         else if (isGrounded && hasFalconSuperJump)
         {
-            playerRb.AddForce(Vector2.up * jumpForce * 2, ForceMode2D.Impulse);
+            playerRb.AddForce(Vector2.up * jumpForce * 1.4f, ForceMode2D.Impulse);
         }
     }
 
@@ -162,32 +139,20 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
     void Sprint(InputAction.CallbackContext context)
     {
-        if (!hasFoxMask)
-        {
-            isSprinting = true;
-            moveSpeed = 7f;
-            smoothDampTime = 0.2f;
-        }
-        else
-        {
-            isSprinting = false;
-            moveSpeed = 10f;
-            smoothDampTime = 0.2f;
-        }
+        isSprinting = true;
     }
 
     void StopSprinting(InputAction.CallbackContext context)
     {
+        isSprinting = false;
         if (!hasFoxMask)
         {
-            isSprinting = false;
-            moveSpeed = 5f;
+            moveSpeed = 7;
             smoothDampTime = 0.1f;
         }
         else
         {
-            isSprinting = false;
-            moveSpeed = 5f;
+            moveSpeed = 10;
             smoothDampTime = 0.1f;
         }
     }
@@ -221,10 +186,6 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         isDashing = false;
         dashCollider.size = SetColliderSize(0.2f, 0.2f);
         dashCollider.offset = SetColliderOffset(0, 0);
-        if (playerRb.linearVelocityY > 0)
-        {
-            playerRb.linearVelocityY = 1;
-        }
         playerRb.gravityScale = fallingGravity;
     }
 
@@ -334,13 +295,13 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
         if (!hasFoxMask && isSprinting)
         {
-            moveSpeed = 7;
-            smoothDampTime = 0.2f;
+            moveSpeed = 9;
+            smoothDampTime = 0.1f;
         }
         else if (hasFoxMask && isSprinting)
         {
-            moveSpeed = 10f;
-            smoothDampTime = 0.2f;
+            moveSpeed = 13;
+            smoothDampTime = 0.1f;
         }
     }
 
