@@ -34,7 +34,7 @@ public class LevelExit : MonoBehaviour
   {
     Debug.Log("Level ended");
     OnLevelExit?.Invoke();
-    BestTimeSaveSystem.TrySaveBestTime(SceneManager.GetActiveScene().name,LevelManager.Instance.GetCurrentLevelTime());
+    BestTimeSaveSystem.Instance.TrySaveBestTime(SceneManager.GetActiveScene().name,LevelManager.Instance.GetCurrentLevelTime());
     //make end level UI appear
     //halt rest of level
     //save best score?
