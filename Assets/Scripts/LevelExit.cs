@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(BoxCollider2D), typeof(SpriteRenderer))]
 public class LevelExit : MonoBehaviour
@@ -33,6 +34,7 @@ public class LevelExit : MonoBehaviour
   {
     Debug.Log("Level ended");
     OnLevelExit?.Invoke();
+    BestTimeSaveSystem.TrySaveBestTime(SceneManager.GetActiveScene().name,LevelManager.Instance.GetCurrentLevelTime());
     //make end level UI appear
     //halt rest of level
     //save best score?

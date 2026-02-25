@@ -1,5 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
 
 public class LevelManager : MonoBehaviour
 {
@@ -52,6 +55,21 @@ public class LevelManager : MonoBehaviour
     {
         return CurrentLevelTime;
     }
+
+    public void SaveLevelData(ref LevelSaveData saveData)
+    {
+       
+
+    }
+
+    public float GetBestTime(LevelSaveData saveData)
+    {
+        return saveData.bestTime;
+    }
+    
+    
     
     
 }
+
+
