@@ -251,11 +251,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerContoller
   playerRb: {fileID: 2119925232548291444}
+  moveDirection: {x: 0, y: 0}
   smoothDampTime: 0.1
-  moveSpeed: 5
-  jumpForce: 20
+  moveSpeed: 7
+  jumpForce: 15
   fallingGravity: 4
-  normalGravity: 1.7
+  normalGravity: 1.5
   isGrounded: 0
   isSprinting: 0
   boxSize: {x: 0.5, y: 0.2}
