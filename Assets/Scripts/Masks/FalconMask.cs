@@ -10,9 +10,8 @@ public class FalconMask : BaseMaskConcrete
     
     public override void OnPickupMask(PlayerController player)
     {
-        player.currentMask = mask;
         player.MaskAbility(mask);
-        UIManager.Instance.SetJumpMaskPage(mask);
+        UIManager.Instance.SetMaskIcon(mask);
         Destroy(this.gameObject);
     }
 }

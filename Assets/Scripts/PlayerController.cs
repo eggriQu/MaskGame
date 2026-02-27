@@ -37,13 +37,11 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     [SerializeField] private SpriteRenderer maskSprite;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private List<Sprite> maskVariants;
-    [SerializeField] private SwipeController maskUI;
     public int maskType;
     public Mask currentMask;
     [SerializeField] private List<Sprite> spriteVariants;
     [SerializeField] private Animator anim;
-    private Coroutine jumpCoroutine, jumpTimeRoutine;
-    private Coroutine sprintCoroutine, sprintTimeRoutine;
+    private Coroutine maskCoroutine, maskTimeRoutine;
 
     [Header("Input Variables")]
     private InputAction move;
@@ -56,15 +54,13 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     [SerializeField] private bool hasFoxMask;
     [SerializeField] public bool hasPhaseMask;
     [SerializeField] public bool hasSkullMask;
+    [SerializeField] public bool hasThrowingKnife;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        maskUI = GameObject.Find("Select UI").GetComponent<SwipeController>();
-        jumpCoroutine = null;
-        jumpTimeRoutine = null;
-        sprintCoroutine = null;
-        sprintTimeRoutine = null;
+        maskCoroutine = null;
+        maskTimeRoutine = null;
     }
 
     private void OnEnable()
@@ -88,7 +84,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
         ability.Enable();
         ability.performed += Ability;
-        
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -130,7 +126,6 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
             playerRb.gravityScale = fallingGravity;
             if (playerRb.linearVelocityY > 0 && !hasSkullMask)
             {
-                //playerRb.AddForce(new Vector2(0, -playerRb.linearVelocityY), ForceMode2D.Impulse);
                 playerRb.linearVelocityY = 0;
             }
             else if ((playerRb.linearVelocityY > 0 || playerRb.linearVelocityY <= 0) && hasSkullMask)
@@ -154,12 +149,10 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         if (!hasFoxMask)
         {
             moveSpeed = 7;
-            smoothDampTime = 0.1f;
         }
         else
         {
             moveSpeed = 10;
-            smoothDampTime = 0.1f;
         }
     }
 
@@ -170,7 +163,11 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
             dashUses = dashUses - 1;
             StartCoroutine(SetDashingTimer());
             playerRb.AddForce(dashDirection * dashForce, ForceMode2D.Impulse);
-            UIManager.Instance.SetDashMaskUses(dashUses);
+            UIManager.Instance.SetMaskUses(dashUses);
+        }
+        else if (hasThrowingKnife && dashUses > 0)
+        {
+
         }
     }
 
@@ -232,7 +229,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     {
         isGrounded = GroundCheck();
 
-        if (isGrounded)
+        if (isGrounded && !isDashing)
         {
             playerRb.gravityScale = normalGravity;
         }
@@ -241,26 +238,6 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         {
             playerRb.gravityScale = fallingGravity;
         }
-
-//        if (maskUI.currentPage == 1)
-//        {
-//           maskSprite.sprite = maskVariants[0];
-//            //spriteRenderer.sprite = spriteVariants[0];
-//            maskType = 0;
-//        }
-//        else if (maskUI.currentPage == 2)
-//        {
-//            maskSprite.sprite = maskVariants[1];
-//            //spriteRenderer.sprite = spriteVariants[1];
-//            maskType = 1;
-//        }
-//        else if (maskUI.currentPage == 3)
-//       {
-//           maskSprite.sprite = maskVariants[2];
-//            //spriteRenderer.sprite = spriteVariants[2];
-//            maskType = 2;
-//        }
-//        currentMask = UIManager.Instance.masks[maskType];
 
         if (moveDirection.x > 0)
         {
@@ -301,12 +278,10 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         if (!hasFoxMask && isSprinting)
         {
             moveSpeed = 9;
-            smoothDampTime = 0.1f;
         }
         else if (hasFoxMask && isSprinting)
         {
             moveSpeed = 13;
-            smoothDampTime = 0.1f;
         }
     }
 
@@ -358,38 +333,23 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
     public void MaskAbility(Mask mask)
     {
-        switch (mask.maskType)
+        if (mask.maskType == 0 || mask.maskType == 1)
         {
-            case (0): // Jump Masks
-                if (mask == UIManager.Instance.masks[0]) // Falcon
-                {
-                    CoroutineCheck(jumpCoroutine);
-                    CoroutineCheck(jumpTimeRoutine);
-                    jumpTimeRoutine = StartCoroutine(MaskTimer(mask, mask.breakTime));
-                }
-                else if (mask == UIManager.Instance.masks[4]) // Skull
-                {
-                    CoroutineCheck(jumpCoroutine);
-                    CoroutineCheck(jumpTimeRoutine);
-                    jumpTimeRoutine = StartCoroutine(MaskTimer(mask, mask.breakTime));
-                }
-                break;
-            case (1): // Sprint Masks
-                if (mask == UIManager.Instance.masks[1]) // Fox
-                {
-                    CoroutineCheck(sprintCoroutine);
-                    CoroutineCheck(sprintTimeRoutine);
-                    sprintTimeRoutine = StartCoroutine(MaskTimer(mask, mask.breakTime));
-                }
-                break;
-            case (2): // Dash Masks
-                if (mask == UIManager.Instance.masks[2]) // Phase
-                {
-                    hasPhaseMask = true;
-                    dashUses = mask.breakTime;
-                    UIManager.Instance.SetDashMaskUses(dashUses);
-                }
-                break;
+            CoroutineCheck(maskCoroutine);
+            CoroutineCheck(maskTimeRoutine);
+            SetMaskVariable(currentMask, false);
+            currentMask = mask;
+            maskTimeRoutine = StartCoroutine(MaskTimer(mask, mask.breakTime));
+        }
+        else
+        {
+            CoroutineCheck(maskCoroutine);
+            CoroutineCheck(maskTimeRoutine);
+            SetMaskVariable(currentMask, false);
+            currentMask = mask;
+            SetMaskVariable(currentMask, true);
+            dashUses = mask.breakTime;
+            UIManager.Instance.SetMaskUses(dashUses);
         }
     }
 
@@ -407,29 +367,12 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
     public IEnumerator MaskTimer(Mask mask, float time)
     {
-        if (mask.maskType == 0 ||  mask.maskType == 1)
-        {
-            if (mask.maskType == 0)
-            {
-                jumpCoroutine = StartCoroutine(UIManager.Instance.SetMaskTime(mask));
-            }
-            else
-            {
-                sprintCoroutine = StartCoroutine(UIManager.Instance.SetMaskTime(mask));
-            }
-            SetMaskVariable(mask, true);
-            yield return new WaitForSeconds(time);
-            SetMaskVariable(mask, false);
-            UIManager.Instance.ZeroMaskTime(mask);
-            if (mask.maskType == 0)
-            {
-                UIManager.Instance.SetJumpMaskPage(UIManager.Instance.masks[3]);
-            }
-            else if (mask.maskType == 1)
-            {
-                UIManager.Instance.SetSprintMaskPage(UIManager.Instance.masks[3]);
-            }
-        }
+        maskCoroutine = StartCoroutine(UIManager.Instance.SetMaskTime(mask));
+        SetMaskVariable(mask, true);
+        yield return new WaitForSeconds(time);
+        SetMaskVariable(mask, false);
+        UIManager.Instance.ZeroMaskTime(mask);
+        UIManager.Instance.SetMaskIcon(UIManager.Instance.masks[3]);
     }
 
     public void SetMaskVariable(Mask mask, bool value)
@@ -449,6 +392,14 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         else if (mask == UIManager.Instance.masks[4])
         {
             hasSkullMask = value;
+        }
+        else if (mask == UIManager.Instance.masks[5])
+        {
+            hasThrowingKnife = value;
+        }
+        else if (mask == null)
+        {
+
         }
     }
 

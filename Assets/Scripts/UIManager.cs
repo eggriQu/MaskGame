@@ -9,16 +9,12 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private SwipeController swipeController;
     [SerializeField] private PlayerController player;
     public List<Mask> masks;
-    [SerializeField] private List<Image> maskIcons;
-    [SerializeField] private List<TextMeshProUGUI> maskTimes;
+    [SerializeField] private Image maskIcon;
+    [SerializeField] private TextMeshProUGUI maskDurabilityText;
 
     [SerializeField] private GameObject WinUI;
-
-    private InputAction next;
-    private InputAction previous;
 
 
     private static UIManager _instance; 
@@ -35,19 +31,10 @@ public class UIManager : MonoBehaviour
             _instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
-       
     }
 
     private void OnEnable()
     {
-        next = InputSystem.actions.FindAction("Next");
-        previous = InputSystem.actions.FindAction("Previous");
-
-        next.Enable();
-        next.performed += NextMask;
-        previous.Enable();
-        previous.performed += PreviousMask;
-
         LevelExit.OnLevelExit += InstantiateWinUI;
     }
 
@@ -56,32 +43,9 @@ public class UIManager : MonoBehaviour
         LevelExit.OnLevelExit -= InstantiateWinUI;
     }
 
-    public void NextMask(InputAction.CallbackContext context)
+    public void SetMaskIcon(Mask mask)
     {
-        swipeController.Next();
-    }
-
-    public void PreviousMask(InputAction.CallbackContext context)
-    {
-        swipeController.Previous();
-    }
-
-    public void SetJumpMaskPage(Mask mask)
-    {
-        swipeController.JumpPage();
-        maskIcons[0].sprite = mask.maskSprite;
-    }
-
-    public void SetSprintMaskPage(Mask mask)
-    {
-        swipeController.SprintPage();
-        maskIcons[1].sprite = mask.maskSprite;
-    }
-
-    public void SetDashMaskPage(Mask mask)
-    {
-        swipeController.DashPage();
-        maskIcons[2].sprite = mask.maskSprite;
+        maskIcon.sprite = mask.maskSprite;
     }
 
     public IEnumerator SetMaskTime(Mask mask)
@@ -89,46 +53,28 @@ public class UIManager : MonoBehaviour
         float time = mask.breakTime;
         while (time > 0)
         {
-            if (mask.maskType == 0)
-            {
-                maskTimes[0].text = "" + time;
-            }
-            else if (mask.maskType == 1)
-            {
-                maskTimes[1].text = "" + time;
-            }
+            maskDurabilityText.text = "" + time;
             time = time - 1;
             yield return new WaitForSeconds(1);
         }
     }
 
-    public void SetDashMaskUses(float uses)
+    public void SetMaskUses(float uses)
     {
         if (uses > 0)
         {
-            maskTimes[2].text = "" + uses;
+            maskDurabilityText.text = "" + uses;
         }
         else
         {
-            maskTimes[2].text = "";
-            SetDashMaskPage(masks[3]);
+            maskDurabilityText.text = "";
+            maskIcon.sprite = masks[3].maskSprite;
         }
     }
 
     public void ZeroMaskTime(Mask mask)
     {
-        if (mask.maskType == 0)
-        {
-            maskTimes[0].text = "";
-        }
-        else if (mask.maskType == 1)
-        {
-            maskTimes[1].text = "";
-        }
-        else if (mask.maskType == 2)
-        {
-            maskTimes[2].text = "";
-        }
+        maskDurabilityText.text = "";
     }
 
     public void InstantiateDeathUI()

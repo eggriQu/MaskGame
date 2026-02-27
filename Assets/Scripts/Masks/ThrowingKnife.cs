@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class FoxMask : BaseMaskConcrete
+public class ThrowingKnife : BaseMaskConcrete
 {
-    public FoxMask(Mask maskType)
+    public ThrowingKnife(Mask maskType)
     {
         this.mask = maskType;
     }

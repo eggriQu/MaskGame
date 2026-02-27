@@ -1800,6 +1800,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9046462966186121609, guid: 6b118c6c9b15cde4dabae3b29d6d86d4, type: 3}
+      propertyPath: jumpForce
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046462966186121609, guid: 6b118c6c9b15cde4dabae3b29d6d86d4, type: 3}
+      propertyPath: normalGravity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046462966186121609, guid: 6b118c6c9b15cde4dabae3b29d6d86d4, type: 3}
+      propertyPath: fallingGravity
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9046462966186121609, guid: 6b118c6c9b15cde4dabae3b29d6d86d4, type: 3}
+      propertyPath: smoothDampTime
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

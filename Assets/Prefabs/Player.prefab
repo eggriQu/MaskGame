@@ -252,11 +252,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerContoller
   playerRb: {fileID: 2119925232548291444}
   moveDirection: {x: 0, y: 0}
-  smoothDampTime: 0.1
+  smoothDampTime: 0.03
   moveSpeed: 7
-  jumpForce: 15
+  jumpForce: 18
   fallingGravity: 4
-  normalGravity: 1.5
+  normalGravity: 2.3
   isGrounded: 0
   isSprinting: 0
   boxSize: {x: 0.5, y: 0.2}
@@ -268,7 +268,7 @@ MonoBehaviour:
   isDashing: 0
   dashForce: 28
   dashUses: 0
-  dashTime: 0.32
+  dashTime: 0.3
   dashCollider: {fileID: 1717909816899373594}
   maskSprite: {fileID: 162148642830171981}
   spriteRenderer: {fileID: 7259313851032818622}
@@ -276,7 +276,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 661950110903fff45826f9ab3c163cfa, type: 3}
   - {fileID: 21300000, guid: f47e201eac7751c45975a53e7ed1a7c1, type: 3}
   - {fileID: 21300000, guid: 3d013995b2b671d42b7e2cdf4112b27c, type: 3}
-  maskUI: {fileID: 0}
   maskType: 2
   currentMask: {fileID: 0}
   spriteVariants:
@@ -288,6 +287,7 @@ MonoBehaviour:
   hasFoxMask: 0
   hasPhaseMask: 0
   hasSkullMask: 0
+  hasThrowingKnife: 0
 --- !u!95 &8325975632151623103
 Animator:
   serializedVersion: 7
