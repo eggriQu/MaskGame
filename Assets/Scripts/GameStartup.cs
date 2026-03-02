@@ -1,0 +1,77 @@
+using System;
+using System.Collections;
+using System.IO;
+using UnityEngine;
+using UnityEngine.Rendering;
+
+public class GameStartup : MonoBehaviour
+{
+
+ private Camera mainCamera;
+
+ private void Awake()
+ {
+  SetupSaveFile();
+  LoadPlayerPrefs();
+  PlayLogoSequence();
+
+
+ }
+
+
+ private void SetupSaveFile()
+ {
+  if (!File.Exists(BestTimeSaveSystem.GetSaveFileName()))
+  {
+   GameSaveData emptySaveData = new GameSaveData();
+   File.WriteAllText(BestTimeSaveSystem.GetSaveFileName(), JsonUtility.ToJson(emptySaveData));
+  }
+ }
+
+ private void LoadPlayerPrefs()
+ {
+  bool fullscreen;
+  if (PlayerPrefs.HasKey("Fullscreen"))
+  {
+   fullscreen = !PlayerPrefs.GetInt("Fullscreen").Equals(0);
+  }
+  else
+  {
+   fullscreen = true;
+  }
+ 
+  if (PlayerPrefs.HasKey("ResolutionX"))
+  {
+   int resolutionX = PlayerPrefs.GetInt("ResolutionX");
+   int resolutionY = PlayerPrefs.GetInt("ResolutionY");
+   Screen.SetResolution(resolutionX, resolutionY, fullscreen);
+  }
+ }
+
+ private void PlayLogoSequence()
+ {
+  mainCamera = Camera.main;
+ 
+ }
+
+
+ private IEnumerator SmoothCameraMove(float duration,Transform targetLocation)
+ {
+  float elapsedTime = 0;
+  Vector3 startPos = mainCamera.transform.position;
+
+  while (elapsedTime < duration)
+  {
+   elapsedTime += Time.deltaTime;
+   float t = elapsedTime / duration;
+   mainCamera.gameObject.transform.position = new Vector3(
+    Mathf.Lerp(startPos.x, targetLocation.position.x, t),
+    Mathf.Lerp(startPos.y, targetLocation.transform.position.y, t),
+    Mathf.Lerp(startPos.z, targetLocation.transform.position.z, t));
+   yield return null;
+  }
+  mainCamera.gameObject.transform.position = targetLocation.transform.position;
+ }
+
+
+}

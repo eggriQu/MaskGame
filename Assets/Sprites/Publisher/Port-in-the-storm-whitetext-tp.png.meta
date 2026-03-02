@@ -1,0 +1,403 @@
+fileFormatVersion: 2
+guid: e8c75b18b01b9054fae30f4adfa54dad
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 90222373243727441
+    second: Port-in-the-storm-whitetext-tp_0
+  - first:
+      213: -3291350684083141906
+    second: Port-in-the-storm-whitetext-tp_1
+  - first:
+      213: -7261305218794260962
+    second: Port-in-the-storm-whitetext-tp_2
+  - first:
+      213: 4228196509794607487
+    second: Port-in-the-storm-whitetext-tp_3
+  - first:
+      213: -4390028009009932325
+    second: Port-in-the-storm-whitetext-tp_4
+  - first:
+      213: 550281656169718216
+    second: Port-in-the-storm-whitetext-tp_5
+  - first:
+      213: -6461060286962720947
+    second: Port-in-the-storm-whitetext-tp_6
+  - first:
+      213: 858866191624795243
+    second: Port-in-the-storm-whitetext-tp_7
+  - first:
+      213: 5453472618955339638
+    second: Port-in-the-storm-whitetext-tp_8
+  - first:
+      213: -3634384664729346218
+    second: Port-in-the-storm-whitetext-tp_9
+  - first:
+      213: 2007995151396624553
+    second: Port-in-the-storm-whitetext-tp_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_0
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 322
+        width: 91
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15e2cfb35c8804100800000000000000
+      internalID: 90222373243727441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_1
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 208
+        width: 739
+        height: 921
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee24cfbbdf5c252d0800000000000000
+      internalID: -3291350684083141906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_2
+      rect:
+        serializedVersion: 2
+        x: 873
+        y: 284
+        width: 95
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e16f3142069aa3b90800000000000000
+      internalID: -7261305218794260962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_3
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 190
+        width: 60
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f71aaded2529daa30800000000000000
+      internalID: 4228196509794607487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_4
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 154
+        width: 55
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd792f009cc7313c0800000000000000
+      internalID: -4390028009009932325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_5
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 129
+        width: 71
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c1e862304ef2a700800000000000000
+      internalID: 550281656169718216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_6
+      rect:
+        serializedVersion: 2
+        x: 509
+        y: 117
+        width: 47
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4f1433b6e3b556a0800000000000000
+      internalID: -6461060286962720947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_7
+      rect:
+        serializedVersion: 2
+        x: 557
+        y: 116
+        width: 66
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b647365304e4beb00800000000000000
+      internalID: 858866191624795243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_8
+      rect:
+        serializedVersion: 2
+        x: 707
+        y: 145
+        width: 57
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 677f6250470aeab40800000000000000
+      internalID: 5453472618955339638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_9
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 177
+        width: 68
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65f1ea93762109dc0800000000000000
+      internalID: -3634384664729346218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Port-in-the-storm-whitetext-tp_10
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 125
+        width: 58
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a8d3bd83f4dddb10800000000000000
+      internalID: 2007995151396624553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Port-in-the-storm-whitetext-tp_0: 90222373243727441
+      Port-in-the-storm-whitetext-tp_1: -3291350684083141906
+      Port-in-the-storm-whitetext-tp_10: 2007995151396624553
+      Port-in-the-storm-whitetext-tp_2: -7261305218794260962
+      Port-in-the-storm-whitetext-tp_3: 4228196509794607487
+      Port-in-the-storm-whitetext-tp_4: -4390028009009932325
+      Port-in-the-storm-whitetext-tp_5: 550281656169718216
+      Port-in-the-storm-whitetext-tp_6: -6461060286962720947
+      Port-in-the-storm-whitetext-tp_7: 858866191624795243
+      Port-in-the-storm-whitetext-tp_8: 5453472618955339638
+      Port-in-the-storm-whitetext-tp_9: -3634384664729346218
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

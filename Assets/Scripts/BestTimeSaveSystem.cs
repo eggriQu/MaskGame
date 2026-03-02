@@ -56,12 +56,7 @@ public class BestTimeSaveSystem : MonoBehaviour
 
     public void TrySaveBestTime(string desiredLevelID, float completionTime)
     {
-        //Check if file exists -> MOVE TO GAME STARTUP!!!!!
-        if (!File.Exists(GetSaveFileName()))
-        {
-            GameSaveData emptySaveData = new GameSaveData();
-            File.WriteAllText(GetSaveFileName(), JsonUtility.ToJson(emptySaveData));
-        }
+        
         LoadSaveData();
        
 
