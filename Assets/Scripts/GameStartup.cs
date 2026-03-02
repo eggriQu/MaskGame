@@ -15,6 +15,7 @@ public class GameStartup : MonoBehaviour
   LoadPlayerPrefs();
   PlayLogoSequence();
 
+  FadePass.m_FadeMult = 1.0f;
 
  }
 
