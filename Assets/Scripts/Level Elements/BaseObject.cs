@@ -34,6 +34,14 @@ public class BaseObject : MonoBehaviour, ILevelObject
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            OnPlayerContact(collision.gameObject.GetComponentInParent<PlayerController>());
+        }
+    }
+
     public virtual void OnPlayerContact(PlayerController player)
     {
 

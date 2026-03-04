@@ -18,9 +18,13 @@ public class PhaseWall : BaseObject
     public override void OnPlayerContact(PlayerController player)
     {
         base.OnPlayerContact(player);
-        if (player.hasPhaseMask && player.isDashing)
+        if (player.hasPhaseMask && player.isDashing && player.playerVelocity != Vector2.zero)
         {
             StartCoroutine(PhaseTimer());
+        }
+        else if (player.hasPhaseMask && player.isDashing && player.playerVelocity == Vector2.zero)
+        {
+            player.PhaseWallPush();
         }
     }
 

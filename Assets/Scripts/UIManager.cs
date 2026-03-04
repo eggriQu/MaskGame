@@ -67,14 +67,15 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            maskDurabilityText.text = "";
-            maskIcon.sprite = masks[3].maskSprite;
+            ZeroMaskTime();
         }
     }
 
-    public void ZeroMaskTime(Mask mask)
+    public void ZeroMaskTime()
     {
         maskDurabilityText.text = "";
+        maskIcon.sprite = masks[3].maskSprite;
+        player.currentMask = null;
     }
 
     public void InstantiateDeathUI()

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 {
     [Header("Physics Variables")]
     [SerializeField] private Rigidbody2D playerRb;
+    public Vector2 playerVelocity;
     [SerializeField] private Vector2 moveDirection = Vector2.zero;
     Vector2 smoothedDirection;
     Vector2 moveDirectionSmoothedVelocity;
@@ -42,6 +43,9 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     [SerializeField] private Animator anim;
     private Coroutine maskCoroutine, maskTimeRoutine;
 
+    [Header("Events")]
+    [SerializeField] private UnityEvent checkDashes;
+
     [Header("Input Variables")]
     private InputAction move;
     private InputAction jump;
@@ -49,11 +53,13 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     private InputAction ability;
 
     [Header("Mask Powerup Variables")]
-    [SerializeField] public bool hasFalconSuperJump;
+    public bool hasFalconSuperJump;
     [SerializeField] private bool hasFoxMask;
-    [SerializeField] public bool hasPhaseMask;
-    [SerializeField] public bool hasSkullMask;
-    [SerializeField] public bool hasThrowingKnife;
+    public bool hasPhaseMask;
+    public bool hasSkullMask;
+    public bool hasThrowingKnife;
+    [SerializeField] private float falconJumpMultiplier;
+    [SerializeField] private float falconGravityMultiplier;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -114,7 +120,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         }
         else if (isGrounded && hasFalconSuperJump)
         {
-            playerRb.AddForce(Vector2.up * jumpForce * 1.75f, ForceMode2D.Impulse);
+            playerRb.AddForce(Vector2.up * jumpForce * falconJumpMultiplier, ForceMode2D.Impulse);
         }
     }
 
@@ -123,6 +129,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         if (!isDashing)
         {
             playerRb.gravityScale = fallingGravity;
+
             if (playerRb.linearVelocityY > 0 && !hasSkullMask)
             {
                 playerRb.linearVelocityY = 0;
@@ -168,6 +175,20 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         {
 
         }
+        DashCheck();
+    }
+
+    public void DashCheck()
+    {
+        if (dashUses == 0)
+        {
+            currentMask = null;
+        }
+    }
+
+    public void PhaseWallPush()
+    {
+        playerRb.linearVelocity = new Vector2(dashDirection.x, dashDirection.y) * (dashForce / 1.2f);
     }
 
     IEnumerator SetDashingTimer()
@@ -228,14 +249,22 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     {
         isGrounded = GroundCheck();
 
-        if (isGrounded && !isDashing)
+        if (isGrounded && !isDashing && !hasFalconSuperJump)
         {
             playerRb.gravityScale = normalGravity;
         }
+        else if (isGrounded && !isDashing && hasFalconSuperJump)
+        {
+            playerRb.gravityScale = normalGravity * falconGravityMultiplier;
+        }
 
-        if (playerRb.linearVelocityY <= 0 && !isGrounded && !isDashing)
+        if (playerRb.linearVelocityY <= 0 && !isGrounded && !isDashing && !hasFalconSuperJump)
         {
             playerRb.gravityScale = fallingGravity;
+        }
+        else if (playerRb.linearVelocityY <= 0 && !isGrounded && !isDashing && hasFalconSuperJump)
+        {
+            playerRb.gravityScale = fallingGravity * falconGravityMultiplier;
         }
 
         if (moveDirection.x > 0)
@@ -249,16 +278,18 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
         if (moveDirection.x != 0)
         {
-            anim.Play(ChosenAnimation(1, false));
+            anim.Play(ChosenAnimation(currentMask, false));
         }
         else
         {
-            anim.Play(ChosenAnimation(1, true));
+            anim.Play(ChosenAnimation(currentMask, true));
         }
     }
 
     private void FixedUpdate()
     {
+        playerVelocity = playerRb.linearVelocity;
+
         smoothedDirection = Vector2.SmoothDamp(
             smoothedDirection,
             moveDirection,
@@ -284,37 +315,53 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         }
     }
 
-    string ChosenAnimation(int maskType, bool isIdle)
+    string ChosenAnimation(Mask mask, bool isIdle)
     {
         string animationName = "";
-        if (!isIdle)
+        if (isIdle)
         {
-            switch (maskType)
+            if (mask == UIManager.Instance.masks[0])
             {
-                case 0:
-                    animationName = "Walk_Sad";
-                    break;
-                case 1:
-                    animationName = "Walk_Happy";
-                    break;
-                case 2:
-                    animationName = "Walk_Mad";
-                    break;
+                animationName = "Falcon_Idle";
+            }
+            else if (mask == UIManager.Instance.masks[1])
+            {
+                animationName = "Fox_Idle";
+            }
+            else if (mask == UIManager.Instance.masks[2])
+            {
+                animationName = "Phase_Idle";
+            }
+            else if (mask == null)
+            {
+                animationName = "Unmasked_Idle";
+            }
+            else if (mask == UIManager.Instance.masks[4])
+            {
+                animationName = "Skull_Idle";
             }
         }
         else
         {
-            switch (maskType)
+            if (mask == UIManager.Instance.masks[0])
             {
-                case 0:
-                    animationName = "Idle_Sad";
-                    break;
-                case 1:
-                    animationName = "Idle_Happy";
-                    break;
-                case 2:
-                    animationName = "Idle_Angry";
-                    break;
+                animationName = "Falcon_Idle";
+            }
+            else if (mask == UIManager.Instance.masks[1])
+            {
+                animationName = "Fox_Idle";
+            }
+            else if (mask == UIManager.Instance.masks[2])
+            {
+                animationName = "Phase_Idle";
+            }
+            else if (mask == null)
+            {
+                animationName = "Unmasked_Walk";
+            }
+            else if (mask == UIManager.Instance.masks[4])
+            {
+                animationName = "Skull_Idle";
             }
         }
         return animationName;
@@ -370,7 +417,8 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         SetMaskVariable(mask, true);
         yield return new WaitForSeconds(time);
         SetMaskVariable(mask, false);
-        UIManager.Instance.ZeroMaskTime(mask);
+        currentMask = null;
+        UIManager.Instance.ZeroMaskTime();
         UIManager.Instance.SetMaskIcon(UIManager.Instance.masks[3]);
     }
 
