@@ -1,6 +1,8 @@
 using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseScript : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class PauseScript : MonoBehaviour
 
     [SerializeField] private Canvas PauseScreen;
     [SerializeField] private SpriteRenderer PauseBackground;
+
+    [SerializeField] private Button ReturnButton;
 
     public bool IsPaused;
 
@@ -39,7 +43,7 @@ public class PauseScript : MonoBehaviour
         }
     }
 
-    void StartPause()
+    public void StartPause()
     {
         PauseScreen.enabled = true;
         PauseBackground.enabled = true;
@@ -51,7 +55,7 @@ public class PauseScript : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    void EndPause()
+    public void EndPause()
     {
         PauseScreen.enabled = false;
         PauseBackground.enabled = false;
@@ -61,5 +65,10 @@ public class PauseScript : MonoBehaviour
 
         IsPaused = false;
         Time.timeScale = 1f;
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }
