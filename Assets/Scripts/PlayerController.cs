@@ -267,11 +267,11 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
             playerRb.gravityScale = fallingGravity * falconGravityMultiplier;
         }
 
-        if (moveDirection.x > 0)
+        if (moveDirection.x > 0 && Time.timeScale != 0)
         {
             spriteRenderer.flipX = false;
         }
-        else if (moveDirection.x < 0)
+        else if (moveDirection.x < 0 && Time.timeScale != 0)
         {
             spriteRenderer.flipX = true;
         }
