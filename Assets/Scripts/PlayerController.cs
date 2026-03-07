@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
             spriteRenderer.flipX = true;
         }
 
-        if (moveDirection.x != 0)
+        if (moveDirection.x != 0 && Time.timeScale != 0)
         {
             anim.Play(ChosenAnimation(currentMask, false));
         }
