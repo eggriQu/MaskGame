@@ -47,9 +47,9 @@ Shader "Custom/Fade"
             {
 
                 fixed4 col = tex2D(_MainTex, i.uv);
-                col = lerp(col,float4(1,1,1,1),_FadeMult);
+                col = lerp(col,float4(0,0,0,1),_FadeMult);
                 
-                return float4(1,0,0,1);
+                //return float4(1,0,0,1);
             
                 return col;
             }
