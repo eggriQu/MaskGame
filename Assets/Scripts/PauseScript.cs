@@ -10,10 +10,10 @@ public class PauseScript : MonoBehaviour
     private InputActionMap PlayerActionMap;
     private InputAction PauseAction;
 
-    [SerializeField] private Canvas PauseScreen;
-    [SerializeField] private SpriteRenderer PauseBackground;
+   // [SerializeField] private Canvas PauseScreen;
+  //  [SerializeField] private SpriteRenderer PauseBackground;
 
-    [SerializeField] private Button ReturnButton;
+  //  [SerializeField] private Button ReturnButton;
 
     public bool IsPaused;
 
@@ -32,39 +32,26 @@ public class PauseScript : MonoBehaviour
     {
         if (PauseAction.WasPressedThisFrame())
         {
-            if (IsPaused)
-            {
-                EndPause();
-            }
-            else
-            {
-                StartPause();
-            }
+           
         }
     }
 
     public void StartPause()
     {
-        PauseScreen.enabled = true;
-        PauseBackground.enabled = true;
+      //  PauseScreen.enabled = true;
+     //   PauseBackground.enabled = true;
 
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-
-        IsPaused = true;
-        Time.timeScale = 0f;
+      //  Cursor.visible = true;
+      //  Cursor.lockState = CursorLockMode.None;
     }
 
     public void EndPause()
     {
-        PauseScreen.enabled = false;
-        PauseBackground.enabled = false;
+       // PauseScreen.enabled = false;
+     //   PauseBackground.enabled = false;
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-        IsPaused = false;
-        Time.timeScale = 1f;
+    //    Cursor.visible = false;
+      //  Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void ReturnToMenu()

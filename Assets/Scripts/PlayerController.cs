@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     [SerializeField] private float dashUses;
     [SerializeField] private float dashTime;
     [SerializeField] private BoxCollider2D dashCollider;
+    
+    private Vector3 pauseStoredVelocity;
+    private float pauseStoredAngularVelocity;
 
     [Header("Mask Variables")]
     [SerializeField] private SpriteRenderer maskSprite;
@@ -51,6 +54,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     private InputAction jump;
     private InputAction sprint;
     private InputAction ability;
+    private InputAction pause;
 
     [Header("Mask Powerup Variables")]
     public bool hasFalconSuperJump;
@@ -74,6 +78,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         jump = InputSystem.actions.FindAction("Jump");
         sprint = InputSystem.actions.FindAction("Sprint");
         ability = InputSystem.actions.FindAction("Ability");
+        pause = InputSystem.actions.FindAction("Pause");
 
         move.Enable();
         move.performed += Move;
@@ -89,9 +94,16 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
         ability.Enable();
         ability.performed += Ability;
+        
+        pause.Enable();
+        pause.performed += Pause;
+        
+        PauseManager.OnGamePaused += OnPause;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        
+       
     }
 
     void Move(InputAction.CallbackContext context)
@@ -191,6 +203,20 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
         playerRb.linearVelocity = new Vector2(dashDirection.x, dashDirection.y) * (dashForce / 1.2f);
     }
 
+    private void Pause(InputAction.CallbackContext context)
+    {
+        if (PauseManager.isGamePaused)
+        {
+            // EndPause();
+            PauseManager.ResumeGame();
+        }
+        else
+        {
+            // StartPause();
+            PauseManager.PauseGame();
+        }
+    }
+
     IEnumerator SetDashingTimer()
     {
         isDashing = true;
@@ -247,6 +273,8 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     // Update is called once per frame
     void Update()
     {
+        if (PauseManager.isGamePaused) return;
+        
         isGrounded = GroundCheck();
 
         if (isGrounded && !isDashing && !hasFalconSuperJump)
@@ -288,6 +316,7 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
 
     private void FixedUpdate()
     {
+        if (PauseManager.isGamePaused) return;
         playerVelocity = playerRb.linearVelocity;
 
         smoothedDirection = Vector2.SmoothDamp(
@@ -375,6 +404,26 @@ public class PlayerController : MonoBehaviour, IInteractable, IMasked
     public void Interact()
     {
 
+    }
+
+    public void OnPause(bool isGamePaused)
+    {
+        if (isGamePaused)
+        {
+            pauseStoredVelocity = playerRb.linearVelocity;
+            pauseStoredAngularVelocity = playerRb.angularVelocity;
+            playerRb.bodyType = RigidbodyType2D.Kinematic;
+            playerRb.linearVelocity = Vector2.zero;
+            playerRb.angularVelocity = 0f;
+            anim.speed = 0f;
+        }
+        else
+        {
+            playerRb.linearVelocity = pauseStoredVelocity;
+            playerRb.angularVelocity =pauseStoredAngularVelocity;
+            playerRb.bodyType = RigidbodyType2D.Dynamic;
+            anim.speed = 1;
+        }
     }
 
     public void MaskAbility(Mask mask)

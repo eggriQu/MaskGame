@@ -13,6 +13,14 @@ public class UIManager : MonoBehaviour
     public List<Mask> masks;
     [SerializeField] private Image maskIcon;
     [SerializeField] private TextMeshProUGUI maskDurabilityText;
+    
+    [SerializeField] private Canvas PauseScreen;
+    [SerializeField] private SpriteRenderer PauseBackground;
+
+    [SerializeField] private GameObject PauseMenuPrefab;
+    private GameObject PauseMenuUI;
+    
+    
 
     [SerializeField] private GameObject WinUI;
 
@@ -36,6 +44,7 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         LevelExit.OnLevelExit += InstantiateWinUI;
+        PauseManager.OnGamePaused += EnableDisablePauseUI;
     }
 
     private void OnDisable()
@@ -83,10 +92,38 @@ public class UIManager : MonoBehaviour
         throw new NotImplementedException();
     }
 
+    public void EnableDisablePauseUI(bool isPaused)
+    {
+        if (PauseMenuUI == null)
+        {
+            PauseMenuUI = Instantiate(PauseMenuPrefab);
+        }
+    
+        if (isPaused)
+        {
+           // PauseScreen.enabled = true; 
+         //   PauseBackground.enabled = true;
+            PauseMenuUI.SetActive(true);
+            SetCursorState(true, CursorLockMode.None);
+        }
+        else
+        {
+          //  PauseScreen.enabled = false; 
+         //   PauseBackground.enabled = false;
+             PauseMenuUI.SetActive(false);
+            SetCursorState(false, CursorLockMode.Locked);
+        }
+    }
+
+    public void SetCursorState(bool visible, CursorLockMode cursorLockMode)
+    {
+        Cursor.visible = visible;
+        Cursor.lockState = cursorLockMode;
+    }
+
     private void InstantiateWinUI()
     {
         Instantiate(WinUI);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        SetCursorState(true, CursorLockMode.None);
     }
 }

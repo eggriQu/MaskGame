@@ -276,6 +276,7 @@ GameObject:
   - component: {fileID: 4616583194805373680}
   - component: {fileID: 3941455515168698203}
   - component: {fileID: 5501011287127079406}
+  - component: {fileID: 5897491575767669701}
   m_Layer: 0
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -385,9 +386,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7214096159855236540}
-        m_TargetAssemblyTypeName: PauseScript, Assembly-CSharp
-        m_MethodName: EndPause
+      - m_Target: {fileID: 5897491575767669701}
+        m_TargetAssemblyTypeName: ResumeGameButton, Assembly-CSharp
+        m_MethodName: OnClickMenuButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -397,6 +398,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+--- !u!114 &5897491575767669701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787544404874853731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970a6565368d22d428766b120533bc87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ResumeGameButton
 --- !u!1 &1312527239149706831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,6 +1537,7 @@ GameObject:
   - component: {fileID: 8063216033741023384}
   - component: {fileID: 1312040214159434239}
   - component: {fileID: 5609765397281376291}
+  - component: {fileID: 6290103743884119977}
   m_Layer: 0
   m_Name: ReturnButton
   m_TagString: Untagged
@@ -1633,9 +1647,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7214096159855236540}
-        m_TargetAssemblyTypeName: PauseScript, Assembly-CSharp
-        m_MethodName: ReturnToMenu
+      - m_Target: {fileID: 6290103743884119977}
+        m_TargetAssemblyTypeName: LoadSceneButton, Assembly-CSharp
+        m_MethodName: OnClickMenuButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1645,6 +1659,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
+--- !u!114 &6290103743884119977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4785593489978886295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19898ca4e49dad44f950b1e07473401a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadSceneButton
+  sceneName: MainMenu
 --- !u!1 &4860513494008810426
 GameObject:
   m_ObjectHideFlags: 0
@@ -2256,9 +2283,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2186405061353564820}
-  - component: {fileID: 7214096159855236540}
   m_Layer: 0
-  m_Name: PauseManager
+  m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2280,23 +2306,6 @@ Transform:
   - {fileID: 8213206093833213094}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7214096159855236540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6049423655766580268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5451f3036edfd2a4cbc412d4a8d6f8c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PauseScript
-  InputActions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  PauseScreen: {fileID: 5081497856777595503}
-  PauseBackground: {fileID: 7681843366038693395}
-  ReturnButton: {fileID: 0}
-  IsPaused: 0
 --- !u!1 &6254549534330196251
 GameObject:
   m_ObjectHideFlags: 0
