@@ -33,8 +33,18 @@ public class LevelExit : MonoBehaviour
   private void OnTriggerEnter2D(Collider2D other)
   {
     Debug.Log("Level ended");
+   
     OnLevelExit?.Invoke();
-    BestTimeSaveSystem.Instance.TrySaveBestTime(SceneManager.GetActiveScene().name,LevelManager.Instance.GetCurrentLevelTime());
+    if (LevelManager.Instance.GetCurrentCollectableCount() == 3)
+    {
+      BestTimeSaveSystem.Instance.TrySaveBestTime(SceneManager.GetActiveScene().name,LevelManager.Instance.GetCurrentLevelTime());
+    }
+    else
+    {
+      BestTimeSaveSystem.Instance.TrySaveBestTime(SceneManager.GetActiveScene().name,999999999f);
+    }
+    
+    
     //make end level UI appear
     //halt rest of level
     //save best score?
