@@ -19,9 +19,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject PauseMenuPrefab;
     private GameObject PauseMenuUI;
-    
-    
 
+    [SerializeField] private Animator fadeAnim;
+    
     [SerializeField] private GameObject WinUI;
 
 
@@ -87,9 +87,14 @@ public class UIManager : MonoBehaviour
         player.currentMask = null;
     }
 
-    public void InstantiateDeathUI()
+    public void PlayFadeTransition()
     {
-        throw new NotImplementedException();
+        fadeAnim.Play("FadeInOut");
+    }
+
+    public void StopFadeTransition()
+    {
+        fadeAnim.Play("Transparent");
     }
 
     public void EnableDisablePauseUI(bool isPaused)

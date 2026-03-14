@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Enemy_PatrolAI : MonoBehaviour
+public class Enemy_PatrolAI : MonoBehaviour, ILevelObject
 {
     [SerializeField] List<Transform> patrolPoints;
     [SerializeField] float patrolSpeed = 5f;
@@ -50,10 +50,15 @@ public class Enemy_PatrolAI : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Kill player, not yet implemented");
-            //TEMP----------------------------------------------
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            OnPlayerContact(other.gameObject.GetComponent<PlayerController>());
         }
     }
-    
+
+    public virtual void OnPlayerContact(PlayerController player)
+    {
+        if (!player.isDead)
+        {
+            StartCoroutine(player.Die());
+        }
+    }
 }

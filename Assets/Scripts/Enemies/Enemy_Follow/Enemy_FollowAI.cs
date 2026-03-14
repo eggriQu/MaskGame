@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Enemy_FollowAI : MonoBehaviour
+public class Enemy_FollowAI : MonoBehaviour, ILevelObject
 {
     private AnimationCurve curveX;
     private AnimationCurve curveY;
@@ -45,8 +45,15 @@ public class Enemy_FollowAI : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            //TEMP---------------------------------
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            OnPlayerContact(other.gameObject.GetComponent<PlayerController>());
+        }
+    }
+
+    public virtual void OnPlayerContact(PlayerController player)
+    {
+        if (!player.isDead && timeUntilSpawn <= 0)
+        {
+            StartCoroutine(player.Die());
         }
     }
 }

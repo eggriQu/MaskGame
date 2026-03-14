@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour
     private int CurrentCollectables = 0;
     
     private float CurrentLevelTime;
+
+    public Vector2 levelOrigin;
     
     private void Awake()
     {
