@@ -41,7 +41,7 @@ public class LevelExit : MonoBehaviour
     }
     else
     {
-      BestTimeSaveSystem.Instance.TrySaveBestTime(SceneManager.GetActiveScene().name,999999999f);
+      BestTimeSaveSystem.Instance.TrySaveBestTime(SceneManager.GetActiveScene().name,1000f);
     }
     
     

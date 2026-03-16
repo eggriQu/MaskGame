@@ -223,6 +223,7 @@ MonoBehaviour:
   PauseScreen: {fileID: 0}
   PauseBackground: {fileID: 0}
   PauseMenuPrefab: {fileID: 6049423655766580268, guid: c3ec37611b5ff714bb860c398b6f839b, type: 3}
+  fadeAnim: {fileID: 0}
   WinUI: {fileID: 1345716817839006248, guid: 6fd013ecb7981ca489e19026b7f94d29, type: 3}
 --- !u!4 &31555458
 Transform:
@@ -1448,6 +1449,7 @@ GameObject:
   - component: {fileID: 1395265784}
   - component: {fileID: 1395265783}
   - component: {fileID: 1395265782}
+  - component: {fileID: 1395265787}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1605,6 +1607,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1395265787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395265781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed4cd6098d9574690af90ba740290f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FadePostProcess
+  postProcessShader: {fileID: 4800000, guid: c484836d1f19c164ca761e253cab1052, type: 3}
+  fadeMult: 0
 --- !u!1 &1411703859
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,6 +1650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4590388d7c69d4c805036c032d390e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
+  levelOrigin: {x: 0, y: 0}
 --- !u!4 &1411703861
 Transform:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class SetupWinUI : MonoBehaviour
       collectableCount = LevelManager.Instance.GetCurrentCollectableCount();
       var loadedBestTime = BestTimeSaveSystem.Instance.GetBestTime(SceneManager.GetActiveScene().name);
 
-      if (collectableCount < 3 && loadedBestTime == 999999999f)
+      if (collectableCount < 3 && loadedBestTime == 1000f)
       {
          bestTimeText.text = "Collect all 3 jewels to set a best time!";
       }
