@@ -11,6 +11,8 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance {get{return _instance;}}
 
     private int CurrentCollectables = 0;
+
+    private bool currentLevelCompleted;
     
     private float CurrentLevelTime;
     
@@ -30,8 +32,11 @@ public class LevelManager : MonoBehaviour
             _instance = this;
             MainCamera = Camera.main;
             if (MainCamera != null) FadePostProcess = MainCamera.GetComponent<FadePostProcess>();
+            ResetLevelManagerState();
         }
     }
+    
+    
 
     private void OnEnable()
     {
@@ -49,7 +54,7 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        if (PauseManager.isGamePaused) return;
+        if (PauseManager.isGamePaused || PauseManager.isLevelPaused) return;
         CurrentLevelTime += Time.deltaTime;
     }
 
@@ -98,6 +103,8 @@ public class LevelManager : MonoBehaviour
         
         SceneManager.LoadScene(sceneName);
         
+        ResetLevelManagerState();
+        
         yield return FadeFromBlack(0.5f);
     }
     
@@ -107,7 +114,17 @@ public class LevelManager : MonoBehaviour
         
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         
+        ResetLevelManagerState();
+        
         yield return FadeFromBlack(0.5f);
+    }
+
+    private void ResetLevelManagerState()
+    {
+        CurrentCollectables = 0;
+        CurrentLevelTime = 0.0f;
+        SetCurrentLevelCompleted(false);
+        PauseManager.PauseLevel();
     }
     
     
@@ -128,6 +145,16 @@ public class LevelManager : MonoBehaviour
     public float GetCurrentLevelTime()
     {
         return CurrentLevelTime;
+    }
+
+    public bool GetCurrentLevelCompleted()
+    {
+        return currentLevelCompleted;
+    }
+
+    public void SetCurrentLevelCompleted(bool completed)
+    {
+        currentLevelCompleted = completed;
     }
 
     

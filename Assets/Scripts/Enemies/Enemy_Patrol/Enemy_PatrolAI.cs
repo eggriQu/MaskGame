@@ -24,6 +24,7 @@ public class Enemy_PatrolAI : MonoBehaviour, ILevelObject
 
     private void Update()
     {
+        if (PauseManager.isGamePaused || PauseManager.isLevelPaused) return;
         if (patrolPoints.Count > 1)
         {
             if (Vector3.Distance(transform.position, currentTargetDest.position) < destinationTolerance)

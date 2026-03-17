@@ -112,6 +112,15 @@ public class PlayerController : MonoBehaviour
 
     void Move(InputAction.CallbackContext context)
     {
+        if (PauseManager.isLevelPaused && LevelManager.Instance.GetCurrentLevelCompleted() == true) return;
+       
+    
+        if (PauseManager.isLevelPaused && LevelManager.Instance.GetCurrentLevelCompleted() != true)
+        {
+            PauseManager.ResumeLevel();
+        }       
+        
+       
         if (!hasSkullMask)
         {
             moveDirection = context.ReadValue<Vector2>();
@@ -121,6 +130,8 @@ public class PlayerController : MonoBehaviour
             moveDirection = context.ReadValue<Vector2>() * 0.75f;
         }
         dashDirection = moveDirection;
+        
+        
     }
 
     void StopMoving(InputAction.CallbackContext context)
