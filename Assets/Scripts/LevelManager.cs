@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(LoadSceneCoroutine(sceneName));
     }
 
-    private void ReloadScene()
+    public void ReloadScene()
     {
         StartCoroutine(ReloadSceneCoroutine());
     }

@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
+            _instance = this;
             Destroy(this.gameObject);
         }
         else

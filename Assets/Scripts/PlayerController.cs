@@ -398,10 +398,10 @@ public class PlayerController : MonoBehaviour
     public IEnumerator Die()
     {
         isDead = true;
-        UIManager.Instance.PlayFadeTransition();
+        LevelManager.Instance.ReloadScene();
         yield return new WaitForSeconds(0.5f);
-        transform.position = LevelManager.Instance.levelOrigin;
-        UIManager.Instance.StopFadeTransition();
+        //transform.position = LevelManager.Instance.levelOrigin;
+        //UIManager.Instance.StopFadeTransition();
         isDead = false;
     }
 

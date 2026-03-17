@@ -263,7 +263,7 @@ MonoBehaviour:
   maskDurabilityText: {fileID: 1405023297}
   PauseScreen: {fileID: 0}
   PauseBackground: {fileID: 0}
-  PauseMenuPrefab: {fileID: 0}
+  PauseMenuPrefab: {fileID: 6049423655766580268, guid: c3ec37611b5ff714bb860c398b6f839b, type: 3}
   fadeAnim: {fileID: 50179666}
   WinUI: {fileID: 1345716817839006248, guid: 6fd013ecb7981ca489e19026b7f94d29, type: 3}
 --- !u!4 &61744701
@@ -1489,6 +1489,7 @@ GameObject:
   - component: {fileID: 489932809}
   - component: {fileID: 489932808}
   - component: {fileID: 489932807}
+  - component: {fileID: 489932812}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1646,6 +1647,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &489932812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489932806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ed4cd6098d9574690af90ba740290f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FadePostProcess
+  postProcessShader: {fileID: 4800000, guid: c484836d1f19c164ca761e253cab1052, type: 3}
+  fadeMult: 0
 --- !u!1001 &520138208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8894,11 +8909,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6167957431763960953, guid: 6b118c6c9b15cde4dabae3b29d6d86d4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.59
+      value: 30.94
       objectReference: {fileID: 0}
     - target: {fileID: 6167957431763960953, guid: 6b118c6c9b15cde4dabae3b29d6d86d4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.06
+      value: -3.26
       objectReference: {fileID: 0}
     - target: {fileID: 6167957431763960953, guid: 6b118c6c9b15cde4dabae3b29d6d86d4, type: 3}
       propertyPath: m_LocalPosition.z
