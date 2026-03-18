@@ -12,11 +12,6 @@ public class FadePostProcess : MonoBehaviour
     //[ImageEffectOpaque]
     void OnRenderImage(RenderTexture src, RenderTexture dest)
     {
-        if (fadeMult == 0)
-        {
-            Graphics.Blit(src,dest);
-            return;
-        }
         if (postProcessMaterial == null)
         {
             postProcessMaterial = new Material(postProcessShader);

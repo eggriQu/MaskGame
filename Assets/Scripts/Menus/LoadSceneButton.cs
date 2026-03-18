@@ -1,11 +1,10 @@
-using System;
 using Menus;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadSceneButton : MonoBehaviour, IMenuButton
 {
  [SerializeField] private string sceneName;
- public static Action<string> OnLoadSceneButtonPressed;
  public void OnClickMenuButton()
  {
   if (sceneName == "")
@@ -13,6 +12,6 @@ public class LoadSceneButton : MonoBehaviour, IMenuButton
    Debug.Log("Scene name not assigned on button: " + gameObject.name);
    return;
   }
-  OnLoadSceneButtonPressed?.Invoke(sceneName);
+  SceneManager.LoadScene(sceneName);
  }
 }

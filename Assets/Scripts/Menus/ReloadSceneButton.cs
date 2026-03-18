@@ -1,15 +1,11 @@
-using System;
-using UnityEngine;
-
 using Menus;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class ReloadSceneButton : MonoBehaviour, IMenuButton
 {
-    public static Action OnReloadSceneButtonPressed;
     public void OnClickMenuButton()
     {
-        OnReloadSceneButtonPressed?.Invoke();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

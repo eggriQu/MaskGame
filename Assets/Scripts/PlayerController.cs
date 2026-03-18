@@ -5,12 +5,10 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Processors;
 using UnityEngine.InputSystem.UI;
 using static UnityEngine.Rendering.DebugUI;
 
-
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IInteractable, IMasked
 {
     [Header("Physics Variables")]
     [SerializeField] private Rigidbody2D playerRb;
@@ -34,8 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashUses;
     [SerializeField] private float dashTime;
     [SerializeField] private BoxCollider2D dashCollider;
-    public bool isDead;
-
+    
     private Vector3 pauseStoredVelocity;
     private float pauseStoredAngularVelocity;
 
@@ -47,7 +44,6 @@ public class PlayerController : MonoBehaviour
     public Mask currentMask;
     [SerializeField] private List<Sprite> spriteVariants;
     [SerializeField] private Animator anim;
-    [SerializeField] private Animator maskAnim;
     private Coroutine maskCoroutine, maskTimeRoutine;
 
     [Header("Events")]
@@ -98,29 +94,20 @@ public class PlayerController : MonoBehaviour
 
         ability.Enable();
         ability.performed += Ability;
-
+        
         pause.Enable();
         pause.performed += Pause;
-
+        
         PauseManager.OnGamePaused += OnPause;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-
+        
+       
     }
 
     void Move(InputAction.CallbackContext context)
     {
-        if (PauseManager.isLevelPaused && LevelManager.Instance.GetCurrentLevelCompleted() == true) return;
-       
-    
-        if (PauseManager.isLevelPaused && LevelManager.Instance.GetCurrentLevelCompleted() != true)
-        {
-            PauseManager.ResumeLevel();
-        }       
-        
-       
         if (!hasSkullMask)
         {
             moveDirection = context.ReadValue<Vector2>();
@@ -130,8 +117,6 @@ public class PlayerController : MonoBehaviour
             moveDirection = context.ReadValue<Vector2>() * 0.75f;
         }
         dashDirection = moveDirection;
-        
-        
     }
 
     void StopMoving(InputAction.CallbackContext context)
@@ -213,9 +198,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void PhaseWallPush(float forceMultipler)
+    public void PhaseWallPush()
     {
-        playerRb.linearVelocity = new Vector2(dashDirection.x, dashDirection.y) * (dashForce * forceMultipler);
+        playerRb.linearVelocity = new Vector2(dashDirection.x, dashDirection.y) * (dashForce / 1.2f);
     }
 
     private void Pause(InputAction.CallbackContext context)
@@ -238,7 +223,14 @@ public class PlayerController : MonoBehaviour
         playerRb.linearVelocity = Vector2.zero;
         playerRb.gravityScale = 0;
         dashCollider.size = SetColliderSize(1, 2.5f);
-        dashCollider.offset = SetColliderOffset(0.6f, 0);
+        if (dashDirection.x > 0)
+        {
+            dashCollider.offset = SetColliderOffset(0.6f, 0);
+        }
+        else if (dashDirection.x < 0)
+        {
+            dashCollider.offset = SetColliderOffset(-0.6f, 0);
+        }
         yield return new WaitForSeconds(dashTime);
         isDashing = false;
         dashCollider.size = SetColliderSize(0.2f, 0.2f);
@@ -278,19 +270,11 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.layer == 6)
-        {
-            StartCoroutine(Die());
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
         if (PauseManager.isGamePaused) return;
-
+        
         isGrounded = GroundCheck();
 
         if (isGrounded && !isDashing && !hasFalconSuperJump)
@@ -313,23 +297,20 @@ public class PlayerController : MonoBehaviour
 
         if (moveDirection.x > 0 && Time.timeScale != 0)
         {
-            transform.localScale = new Vector3(1.2f, 1.2f, 1);
+            spriteRenderer.flipX = false;
         }
         else if (moveDirection.x < 0 && Time.timeScale != 0)
         {
-            transform.localScale = new Vector3(-1.2f, 1.2f, 1);
+            spriteRenderer.flipX = true;
         }
 
-        SetMaskSprite(currentMask);
         if (moveDirection.x != 0 && Time.timeScale != 0)
         {
-            anim.Play("Unmasked_Walk");
-            maskAnim.Play("Mask_Walk");
+            anim.Play(ChosenAnimation(currentMask, false));
         }
         else
         {
-            anim.Play("Unmasked_Idle");
-            maskAnim.Play("Mask_Idle");
+            anim.Play(ChosenAnimation(currentMask, true));
         }
     }
 
@@ -344,13 +325,13 @@ public class PlayerController : MonoBehaviour
             ref moveDirectionSmoothedVelocity,
             smoothDampTime);
 
-        if (!isDashing && !isDead)
+        if (!isDashing)
         {
             playerRb.linearVelocity = new Vector2(smoothedDirection.x * moveSpeed, playerRb.linearVelocityY);
         }
-        else if (isDead)
+        else
         {
-            playerRb.linearVelocity = Vector2.zero;
+            //playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, playerRb.linearVelocity.y);
         }
 
         if (!hasFoxMask && isSprinting)
@@ -363,16 +344,66 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetMaskSprite(Mask mask)
+    string ChosenAnimation(Mask mask, bool isIdle)
     {
-        if (mask != null)
+        string animationName = "";
+        if (isIdle)
         {
-            maskSprite.sprite = mask.maskSprite;
+            if (mask == UIManager.Instance.masks[0])
+            {
+                animationName = "Falcon_Idle";
+            }
+            else if (mask == UIManager.Instance.masks[1])
+            {
+                animationName = "Fox_Idle";
+            }
+            else if (mask == UIManager.Instance.masks[2])
+            {
+                animationName = "Phase_Idle";
+            }
+            else if (mask == null)
+            {
+                animationName = "Unmasked_Idle";
+            }
+            else if (mask == UIManager.Instance.masks[4])
+            {
+                animationName = "Skull_Idle";
+            }
         }
         else
         {
-            maskSprite.sprite = UIManager.Instance.masks[3].maskSprite;
+            if (mask == UIManager.Instance.masks[0])
+            {
+                animationName = "Falcon_Idle";
+            }
+            else if (mask == UIManager.Instance.masks[1])
+            {
+                animationName = "Fox_Idle";
+            }
+            else if (mask == UIManager.Instance.masks[2])
+            {
+                animationName = "Phase_Idle";
+            }
+            else if (mask == null)
+            {
+                animationName = "Unmasked_Walk";
+            }
+            else if (mask == UIManager.Instance.masks[4])
+            {
+                animationName = "Skull_Idle";
+            }
         }
+        return animationName;
+    }
+
+    public void TakeDamage(int damage)
+    {
+
+    }
+
+    public void Interact()
+    {
+
     }
 
     public void OnPause(bool isGamePaused)
@@ -389,20 +420,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerRb.linearVelocity = pauseStoredVelocity;
-            playerRb.angularVelocity = pauseStoredAngularVelocity;
+            playerRb.angularVelocity =pauseStoredAngularVelocity;
             playerRb.bodyType = RigidbodyType2D.Dynamic;
             anim.speed = 1;
         }
-    }
-
-    public IEnumerator Die()
-    {
-        isDead = true;
-        LevelManager.Instance.ReloadScene();
-        yield return new WaitForSeconds(0.5f);
-        //transform.position = LevelManager.Instance.levelOrigin;
-        //UIManager.Instance.StopFadeTransition();
-        isDead = false;
     }
 
     public void MaskAbility(Mask mask)

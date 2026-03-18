@@ -2,17 +2,16 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Enemy_FollowAI : MonoBehaviour, ILevelObject
+public class Enemy_FollowAI : MonoBehaviour
 {
     private AnimationCurve curveX;
     private AnimationCurve curveY;
     
     private bool isFollowing;
 
-    private float playbackTime;
-    private float recordTime;
+    private float currentTime;
 
-    public float timeUntilSpawn;
+    [SerializeField] private float timeUntilSpawn;
     [SerializeField] GameObject player;
 
     private void Awake()
@@ -20,30 +19,25 @@ public class Enemy_FollowAI : MonoBehaviour, ILevelObject
         curveX = new AnimationCurve();
         curveY = new AnimationCurve();
         isFollowing = false;
+        this.gameObject.transform.position = player.transform.position;
     }
     private void FixedUpdate()
     {
-        if (PauseManager.isGamePaused || PauseManager.isLevelPaused ) return;
-        curveX.AddKey(recordTime, player.transform.position.x);
-        curveY.AddKey(recordTime ,player.transform.position.y);
+        curveX.AddKey(Time.time, player.transform.position.x);
+        curveY.AddKey(Time.time ,player.transform.position.y);
 
         if (isFollowing)
         {
-            this.gameObject.transform.position = new Vector3(curveX.Evaluate(playbackTime), curveY.Evaluate(playbackTime), 0);
+            this.gameObject.transform.position = new Vector3(curveX.Evaluate(currentTime), curveY.Evaluate(currentTime), 0);
         }
     }
     private void Update()
     {
-        if (PauseManager.isGamePaused || PauseManager.isLevelPaused ) return;
-        recordTime += Time.deltaTime;
+        timeUntilSpawn -= Time.deltaTime;
         if (timeUntilSpawn <= 0)
         {
             isFollowing = true;
-            playbackTime += Time.deltaTime;
-        }
-        else
-        {
-            timeUntilSpawn -= Time.deltaTime;
+            currentTime += Time.deltaTime;
         }
     }
 
@@ -51,15 +45,8 @@ public class Enemy_FollowAI : MonoBehaviour, ILevelObject
     {
         if (other.CompareTag("Player"))
         {
-            OnPlayerContact(other.gameObject.GetComponent<PlayerController>());
-        }
-    }
-
-    public virtual void OnPlayerContact(PlayerController player)
-    {
-        if (!player.isDead && timeUntilSpawn <= 0)
-        {
-            StartCoroutine(player.Die());
+            //TEMP---------------------------------
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

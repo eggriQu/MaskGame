@@ -96,17 +96,9 @@ public class BestTimeSaveSystem : MonoBehaviour
         _saveDataJSON = File.ReadAllText(GetSaveFileName());
     }
 
-    public float GetBestTime(string levelname)
+    private float GetBestTime(string levelname)
     {
-        if (_bestTimesDictionary.TryGetValue(levelname, out LevelSaveData levelSaveData))
-        {
-            return _bestTimesDictionary[levelname].bestTime;
-        }
-        else
-        {
-            return 1000f;
-        }
-        
+        return _bestTimesDictionary[levelname].bestTime;
     }
 
  

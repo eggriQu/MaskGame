@@ -21,12 +21,10 @@ public class PhaseWall : BaseObject
         if (player.hasPhaseMask && player.isDashing && player.playerVelocity != Vector2.zero)
         {
             StartCoroutine(PhaseTimer());
-            player.PhaseWallPush(0.65f);
         }
-        else if (player.hasPhaseMask && player.isDashing && (player.playerVelocity.x == 0 || player.playerVelocity.y == 0))
+        else if (player.hasPhaseMask && player.isDashing && player.playerVelocity == Vector2.zero)
         {
-            StartCoroutine(PhaseTimer());
-            player.PhaseWallPush(1.05f);
+            player.PhaseWallPush();
         }
     }
 
