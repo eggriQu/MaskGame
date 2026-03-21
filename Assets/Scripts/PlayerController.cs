@@ -30,11 +30,14 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
     [SerializeField] private Vector2 dashDirection;
     [SerializeField] public bool isDashing;
+    public bool isPhasing;
     [SerializeField] private float dashForce;
     [SerializeField] private float dashUses;
     [SerializeField] private float dashTime;
     [SerializeField] private BoxCollider2D dashCollider;
     public bool isDead;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private GameObject knifeProjectile;
 
     private Vector3 pauseStoredVelocity;
     private float pauseStoredAngularVelocity;
@@ -130,8 +133,6 @@ public class PlayerController : MonoBehaviour
             moveDirection = context.ReadValue<Vector2>() * 0.75f;
         }
         dashDirection = moveDirection;
-        
-        
     }
 
     void StopMoving(InputAction.CallbackContext context)
@@ -200,7 +201,10 @@ public class PlayerController : MonoBehaviour
         }
         else if (hasThrowingKnife && dashUses > 0)
         {
-
+            dashUses = dashUses - 1;
+            Rigidbody2D projectileRb = Instantiate(knifeProjectile, firePoint.position, firePoint.rotation).GetComponent<Rigidbody2D>();
+            projectileRb.AddForce(dashDirection.normalized * 15f, ForceMode2D.Impulse);
+            UIManager.Instance.SetMaskUses(dashUses);
         }
         DashCheck();
     }
@@ -215,7 +219,7 @@ public class PlayerController : MonoBehaviour
 
     public void PhaseWallPush(float forceMultipler)
     {
-        playerRb.linearVelocity = new Vector2(dashDirection.x, dashDirection.y) * (dashForce * forceMultipler);
+        playerRb.linearVelocity = playerVelocity.normalized * (dashForce * forceMultipler);
     }
 
     private void Pause(InputAction.CallbackContext context)
@@ -321,10 +325,15 @@ public class PlayerController : MonoBehaviour
         }
 
         SetMaskSprite(currentMask);
-        if (moveDirection.x != 0 && Time.timeScale != 0)
+        if (moveDirection.x != 0 && Time.timeScale != 0 && !isSprinting)
         {
             anim.Play("Unmasked_Walk");
             maskAnim.Play("Mask_Walk");
+        }
+        else if (moveDirection.x != 0 && Time.timeScale != 0 && isSprinting)
+        {
+            anim.Play("Unmasked_Run");
+            maskAnim.Play("Mask_Run");
         }
         else
         {

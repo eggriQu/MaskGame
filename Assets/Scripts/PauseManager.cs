@@ -11,6 +11,7 @@ public static class PauseManager
     public static void PauseGame()
     {
         isGamePaused = true;
+        Time.timeScale = 0;
         OnGamePaused?.Invoke(isGamePaused);
         Debug.Log("PauseGame");
     }
@@ -18,6 +19,7 @@ public static class PauseManager
     public static void ResumeGame()
     {
         isGamePaused = false;
+        Time.timeScale = 1;
         OnGamePaused?.Invoke(isGamePaused);
         Debug.Log("ResumeGame");
     }

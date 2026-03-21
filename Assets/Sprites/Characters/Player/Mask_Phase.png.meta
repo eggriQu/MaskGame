@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5d830b6b574751249b486ce88a48d753
+guid: 06a1026e4164ae042ac672c9ebed273f
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 300
+  spritePixelsToUnits: 700
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -103,10 +103,10 @@ TextureImporter:
       name: Mask_Phase_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 4
-        width: 105
-        height: 112
+        x: 92
+        y: 111
+        width: 316
+        height: 278
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

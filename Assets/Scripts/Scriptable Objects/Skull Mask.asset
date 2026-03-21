@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af51bdba0e2bce4aa177a532b71ba79, type: 3}
   m_Name: Skull Mask
   m_EditorClassIdentifier: Assembly-CSharp::Mask
-  maskSprite: {fileID: 21300000, guid: ea624e5801d6d714db32e2400db48f53, type: 3}
+  maskSprite: {fileID: 21300000, guid: 83097b85d4283c5448d8840af685d6e1, type: 3}
   maskType: 0
   breakTime: 15

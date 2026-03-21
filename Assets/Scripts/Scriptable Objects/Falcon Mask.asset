@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af51bdba0e2bce4aa177a532b71ba79, type: 3}
   m_Name: Falcon Mask
   m_EditorClassIdentifier: Assembly-CSharp::Mask
-  maskSprite: {fileID: 21300000, guid: 619131b923f62ac438ee1841ba3fe083, type: 3}
+  maskSprite: {fileID: 21300000, guid: f1532654629326b418197691792522ed, type: 3}
   maskType: 0
   breakTime: 12
