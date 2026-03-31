@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class PhaseWall : BaseObject
 {
+    private Color opaque = new Color(138, 43, 226, 255);
+    private Color transparent = new Color(138, 43, 226, 125);
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -33,9 +36,9 @@ public class PhaseWall : BaseObject
     private IEnumerator PhaseTimer()
     {
         objectCollider.isTrigger = true;
-        spriteRenderer.color = Color.azure; 
+        spriteRenderer.color = Color.white; 
         yield return new WaitForSeconds(1.5f);
-        spriteRenderer.color = Color.blueViolet;
+        spriteRenderer.color = Color.purple;
         objectCollider.isTrigger = false;
     }
 }
