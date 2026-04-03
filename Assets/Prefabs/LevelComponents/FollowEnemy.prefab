@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2864780958394295118}
   - component: {fileID: 8734485397472842632}
   - component: {fileID: 4478767687401073826}
+  - component: {fileID: 4151237818819921370}
   m_Layer: 0
   m_Name: FollowEnemy
   m_TagString: Untagged
@@ -47,8 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dd5f15536be3043b570fac3030eabe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_FollowAI
+  isStunned: 0
+  clonePrefab: {fileID: 19318099105449974}
   timeUntilSpawn: 3
   player: {fileID: 0}
+  anim: {fileID: 4151237818819921370}
 --- !u!212 &2864780958394295118
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -171,3 +175,25 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
+--- !u!95 &4151237818819921370
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19318099105449974}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6d11e55432570fb40adeaa38d3dcd278, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

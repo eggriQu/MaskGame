@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,6 +8,10 @@ public class Enemy_PatrolAI : MonoBehaviour, ILevelObject
 {
     [SerializeField] List<Transform> patrolPoints;
     [SerializeField] float patrolSpeed = 5f;
+
+    [SerializeField] private bool stunned;
+    [SerializeField] private Animator anim;
+    [SerializeField] private BoxCollider2D boxCollider;
 
     private int listIndex = 0;
 
@@ -25,13 +30,17 @@ public class Enemy_PatrolAI : MonoBehaviour, ILevelObject
     private void Update()
     {
         if (PauseManager.isGamePaused || PauseManager.isLevelPaused) return;
-        if (patrolPoints.Count > 1)
+        if (patrolPoints.Count > 1 && !stunned)
         {
             if (Vector3.Distance(transform.position, currentTargetDest.position) < destinationTolerance)
             {
                 SelectNextPoint();
             }
             MoveToPoint();
+        }
+        else if (stunned)
+        {
+
         }
     }
 
@@ -47,17 +56,36 @@ public class Enemy_PatrolAI : MonoBehaviour, ILevelObject
         transform.position = Vector3.MoveTowards(transform.position, currentTargetDest.position, Time.deltaTime * patrolSpeed);
     }
 
+    private IEnumerator StunRoutine()
+    {
+        stunned = true;
+        anim.Play("Enemy_Stunned");
+        boxCollider.isTrigger = true;
+        yield return new WaitForSeconds(4);
+        boxCollider.isTrigger = false;
+        anim.Play("Enemy_Alive");
+        stunned = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Projectile") && !stunned)
         {
-            OnPlayerContact(other.gameObject.GetComponent<PlayerController>());
+            StartCoroutine(StunRoutine());
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            OnPlayerContact(collision.gameObject.GetComponent<PlayerController>());
         }
     }
 
     public virtual void OnPlayerContact(PlayerController player)
     {
-        if (!player.isDead)
+        if (!player.isDead && !stunned)
         {
             StartCoroutine(player.Die());
         }

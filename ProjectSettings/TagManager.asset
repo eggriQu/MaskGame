@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Detection Collider
   - Camera Bounds
+  - Projectile
   layers:
   - Default
   - TransparentFX

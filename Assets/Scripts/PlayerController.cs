@@ -486,14 +486,4 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
-    public void ChangeMask(int maskIndex)
-    {
-        //maskType = currentMask.maskType;
-    }
-
-    public void SetFalconSuperJump(bool value)
-    {
-        hasFalconSuperJump = value;
-    }
 }
