@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Processors;
@@ -72,11 +73,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float falconJumpMultiplier;
     [SerializeField] private float falconGravityMultiplier;
 
+    [Header("Audios")]
+    private Transform DeathSoundEmpty;
+    private AudioSource DeathSoundSource;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         maskCoroutine = null;
         maskTimeRoutine = null;
+
+        DeathSoundEmpty = transform.Find("DeathSound");
+        DeathSoundSource = DeathSoundEmpty.GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -341,6 +349,7 @@ public class PlayerController : MonoBehaviour
             maskAnim.Play("Mask_Idle");
         }
     }
+    
 
     private void FixedUpdate()
     {
@@ -407,6 +416,9 @@ public class PlayerController : MonoBehaviour
     public IEnumerator Die()
     {
         isDead = true;
+        DeathSoundSource.Play();
+        yield return new WaitForSeconds(DeathSoundSource.clip.length);
+
         LevelManager.Instance.ReloadScene();
         yield return new WaitForSeconds(0.5f);
         //transform.position = LevelManager.Instance.levelOrigin;
