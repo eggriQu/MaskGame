@@ -1,8 +1,8 @@
-using UnityEditor.UI;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+
 
 public class PauseScript : MonoBehaviour
 {
@@ -30,10 +30,7 @@ public class PauseScript : MonoBehaviour
 
     private void Update()
     {
-        if (PauseAction.WasPressedThisFrame())
-        {
-           
-        }
+        
     }
 
     public void StartPause()

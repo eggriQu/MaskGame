@@ -113,13 +113,42 @@ public class PlayerController : MonoBehaviour
         pause.Enable();
         pause.performed += Pause;
 
-        PauseManager.OnGamePaused += OnPause;
+        //PauseManager.OnGamePaused += OnPause;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
 
     }
+    
+    private void OnDisable()
+    {
+   
+
+        move.Disable();
+        move.performed -= Move;
+        move.canceled -= StopMoving;
+
+        jump.Disable();
+        jump.performed -= Jump;
+        jump.canceled -= CancelJump;
+
+        sprint.Disable();
+        sprint.performed -= Sprint;
+        sprint.canceled -= StopSprinting;
+
+        ability.Disable();
+        ability.performed -= Ability;
+
+        pause.Disable();
+        pause.performed -= Pause;
+
+        //PauseManager.OnGamePaused += OnPause;
+
+    
+
+    }
+    
 
     void Move(InputAction.CallbackContext context)
     {
@@ -393,6 +422,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /*
     public void OnPause(bool isGamePaused)
     {
         if (isGamePaused)
@@ -411,7 +441,7 @@ public class PlayerController : MonoBehaviour
             playerRb.bodyType = RigidbodyType2D.Dynamic;
             anim.speed = 1;
         }
-    }
+    }*/
 
     public IEnumerator Die()
     {
