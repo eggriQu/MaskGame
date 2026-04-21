@@ -158,9 +158,13 @@ public class LevelManager : MonoBehaviour
 
     private void OnNewSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        FindPostProcess();
+        if (scene.name == "MainMenu" && !HasSplashScreenPlayed) return;
         
+        FindPostProcess();
+                    
         StartCoroutine(FadeFromBlack(0.5f));
+        
+        
     }
     
     
