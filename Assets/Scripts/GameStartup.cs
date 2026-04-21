@@ -25,7 +25,15 @@ public class GameStartup : MonoBehaviour
 
  private void Start()
  {
-  PlayLogoSequence();
+   if (!LevelManager.Instance.GetHasSplashScreenPlayed())
+   {
+    LevelManager.Instance.SetHasSplashScreenPlayed(true);
+
+   
+   
+    PlayLogoSequence();
+   }
+  
  }
 
 

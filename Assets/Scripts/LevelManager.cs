@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
     private static LevelManager _instance; 
     public static LevelManager Instance {get{return _instance;}}
 
+    private bool HasSplashScreenPlayed;
+
     private int CurrentCollectables = 0;
 
     private bool currentLevelCompleted;
@@ -17,9 +19,9 @@ public class LevelManager : MonoBehaviour
     private float CurrentLevelTime;
     
     private Camera MainCamera;
-    private FadePostProcess FadePostProcess;
+    public FadePostProcess FadePostProcess;
 
-    public Vector2 levelOrigin;
+   // public Vector2 levelOrigin;
     
     private void Awake()
     {
@@ -30,19 +32,22 @@ public class LevelManager : MonoBehaviour
         else
         {
             _instance = this;
-            MainCamera = Camera.main;
-            if (MainCamera != null) FadePostProcess = MainCamera.GetComponent<FadePostProcess>();
+            FindPostProcess();
             ResetLevelManagerState();
+            DontDestroyOnLoad(this.gameObject);
         }
     }
+
     
-    
+
 
     private void OnEnable()
     {
         StageCollectable.CollectableCollected += IncrementCollectableCounter;
         ReloadSceneButton.OnReloadSceneButtonPressed += ReloadScene;
         LoadSceneButton.OnLoadSceneButtonPressed += LoadScene;
+
+        SceneManager.sceneLoaded += OnNewSceneLoaded;
     }
 
     private void OnDisable()
@@ -50,12 +55,15 @@ public class LevelManager : MonoBehaviour
         StageCollectable.CollectableCollected -= IncrementCollectableCounter;
         ReloadSceneButton.OnReloadSceneButtonPressed -= ReloadScene;
         LoadSceneButton.OnLoadSceneButtonPressed -= LoadScene;
+        
+        SceneManager.sceneLoaded -= OnNewSceneLoaded;
     }
 
     private void Update()
     {
         if (PauseManager.isGamePaused || PauseManager.isLevelPaused) return;
         CurrentLevelTime += Time.deltaTime;
+        
     }
 
     private void LoadScene(string sceneName)
@@ -70,6 +78,7 @@ public class LevelManager : MonoBehaviour
     
     private IEnumerator FadeToBlack(float duration)
     {
+      
         float elapsedTime = 0.0f;
 
         while (elapsedTime < duration)
@@ -80,43 +89,62 @@ public class LevelManager : MonoBehaviour
             yield return null;
         }
         FadePostProcess.fadeMult = 1.0f;
+
+        
         
     }
     
     private IEnumerator FadeFromBlack(float duration)
     {
+    
         float elapsedTime = 0.0f;
-
+        
         while (elapsedTime < duration)
         {
+            
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
+           
             FadePostProcess.fadeMult = Mathf.Lerp(1.0f, 0.0f, t);
+            Debug.Log(FadePostProcess.fadeMult);
             yield return null;
         }
         FadePostProcess.fadeMult = 0.0f;
+  
     }
     
     private IEnumerator LoadSceneCoroutine(string sceneName)
     {
+        PauseManager.ResumeGame();
+    
         yield return FadeToBlack(0.5f);
-        
-        SceneManager.LoadScene(sceneName);
         
         ResetLevelManagerState();
         
-        yield return FadeFromBlack(0.5f);
+        
+        
+        SceneManager.LoadScene(sceneName);
+        UIManager.SetCursorState(true, CursorLockMode.None);
+
+       
+        
+        
     }
     
     private IEnumerator ReloadSceneCoroutine()
     {
+        PauseManager.ResumeGame();
+     
         yield return FadeToBlack(0.5f);
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         
         ResetLevelManagerState();
         
-        yield return FadeFromBlack(0.5f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+       
+        UIManager.SetCursorState(true, CursorLockMode.None);
+        
+    
     }
 
     private void ResetLevelManagerState()
@@ -126,8 +154,14 @@ public class LevelManager : MonoBehaviour
         SetCurrentLevelCompleted(false);
         PauseManager.PauseLevel();
     }
-    
-    
+
+
+    private void OnNewSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        FindPostProcess();
+        
+        StartCoroutine(FadeFromBlack(0.5f));
+    }
     
     
     
@@ -155,6 +189,21 @@ public class LevelManager : MonoBehaviour
     public void SetCurrentLevelCompleted(bool completed)
     {
         currentLevelCompleted = completed;
+    }
+
+    public bool GetHasSplashScreenPlayed()
+    {
+        return HasSplashScreenPlayed;
+    }
+
+    public void SetHasSplashScreenPlayed(bool played)
+    {
+        HasSplashScreenPlayed = played;
+    }
+
+    public void FindPostProcess()
+    {
+              FadePostProcess = Camera.main.GetComponent<FadePostProcess>();
     }
 
     

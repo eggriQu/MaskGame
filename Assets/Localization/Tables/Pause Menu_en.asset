@@ -30,6 +30,18 @@ MonoBehaviour:
     m_Localized: Return To Menu
     m_Metadata:
       m_Items: []
+  - m_Id: 12570519793344512
+    m_Localized: Restart Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12570714132226048
+    m_Localized: Exit to Desktop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12570861499097088
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -30,6 +30,18 @@ MonoBehaviour:
     m_Localized: "Volver al men\xFA"
     m_Metadata:
       m_Items: []
+  - m_Id: 12570519793344512
+    m_Localized: TODO:Restart level->spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12570714132226048
+    m_Localized: TODO:Exit to desktop->spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12570861499097088
+    m_Localized: TODO:Options->spanish
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

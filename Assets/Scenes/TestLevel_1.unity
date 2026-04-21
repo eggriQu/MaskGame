@@ -7080,7 +7080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c4590388d7c69d4c805036c032d390e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  levelOrigin: {x: 19.93, y: 6.9}
+  FadePostProcess: {fileID: 0}
 --- !u!4 &1411703861
 Transform:
   m_ObjectHideFlags: 0

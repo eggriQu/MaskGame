@@ -51,6 +51,7 @@ public class UIManager : MonoBehaviour
     private void OnDisable()
     {
         LevelExit.OnLevelExit -= InstantiateWinUI;
+        PauseManager.OnGamePaused -= EnableDisablePauseUI;
     }
 
     public void SetMaskIcon(Mask mask)
@@ -121,7 +122,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SetCursorState(bool visible, CursorLockMode cursorLockMode)
+    public static void SetCursorState(bool visible, CursorLockMode cursorLockMode)
     {
         Cursor.visible = visible;
         Cursor.lockState = cursorLockMode;

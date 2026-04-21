@@ -27,6 +27,18 @@ MonoBehaviour:
     m_Key: Return_Key
     m_Metadata:
       m_Items: []
+  - m_Id: 12570519793344512
+    m_Key: Restart_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12570714132226048
+    m_Key: ExitDesktop_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12570861499097088
+    m_Key: Options_Key
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
