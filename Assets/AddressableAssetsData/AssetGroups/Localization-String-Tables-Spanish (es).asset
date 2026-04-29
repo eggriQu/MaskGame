@@ -20,12 +20,14 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-es
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3a330a08dd9d2ca4a8641f517b3c4f87
     m_Address: Main Menu_es
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-es
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 86095afc90e33124b990b64f502ccb43
     m_Address: Pause Menu_es

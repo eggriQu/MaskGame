@@ -19,11 +19,11 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 14133108736
-    m_Localized: You Win!!!
+    m_Localized: You Win!
     m_Metadata:
       m_Items: []
   - m_Id: 130327912448
-    m_Localized: 'Clear Time:'
+    m_Localized: 'Time:'
     m_Metadata:
       m_Items: []
   - m_Id: 336691863552

@@ -8,8 +8,8 @@ public class SetupWinUI : MonoBehaviour
    private float endTime;
    private int collectableCount;
 
-   [SerializeField] private TextMeshProUGUI clearTimeText;
-   [SerializeField] private TextMeshProUGUI bestTimeText;
+   [SerializeField] private TextMeshProUGUI clearTimeTime;
+   [SerializeField] private TextMeshProUGUI bestTimeTime;
    [SerializeField] private Transform[] jewels;
 
 
@@ -20,12 +20,13 @@ public class SetupWinUI : MonoBehaviour
 
       if (collectableCount < 3 && loadedBestTime == 1000)
       {
-         bestTimeText.text = "Collect all 3 jewels to set a best time!";
+         bestTimeTime.text = "--:--";
       }
       else
       {
+         Debug.Log(loadedBestTime);
          var bestTimespan = TimeSpan.FromSeconds(loadedBestTime);
-         bestTimeText.text = ("Best time: " + $"{bestTimespan.TotalMinutes:00}:{bestTimespan.Seconds:00}");
+         bestTimeTime.text = ($"{bestTimespan.TotalMinutes:00}:{bestTimespan.Seconds:00}");
       }
       
      
@@ -34,7 +35,7 @@ public class SetupWinUI : MonoBehaviour
       endTime = LevelManager.Instance.GetCurrentLevelTime();
       
       var endTimespan = TimeSpan.FromSeconds(endTime);
-      clearTimeText.text = ("Clear time: " + $"{endTimespan.TotalMinutes:00}:{endTimespan.Seconds:00}");
+      clearTimeTime.text = ($"{endTimespan.TotalMinutes:00}:{endTimespan.Seconds:00}");
 
       for (int i = 0; i < collectableCount; i++)
       {

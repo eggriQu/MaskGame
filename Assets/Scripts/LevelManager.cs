@@ -106,7 +106,6 @@ public class LevelManager : MonoBehaviour
             float t = elapsedTime / duration;
            
             FadePostProcess.fadeMult = Mathf.Lerp(1.0f, 0.0f, t);
-            Debug.Log(FadePostProcess.fadeMult);
             yield return null;
         }
         FadePostProcess.fadeMult = 0.0f;

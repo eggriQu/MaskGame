@@ -39,7 +39,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 12570861499097088
-    m_Localized: Options
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15409627787993088
+    m_Localized: Back
     m_Metadata:
       m_Items: []
   references:

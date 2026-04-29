@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 74476560384
-    m_Localized: EN PAUSA
+    m_Localized: Pausado
     m_Metadata:
       m_Items: []
   - m_Id: 252784812032
@@ -27,19 +27,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 355763363840
-    m_Localized: "Volver al men\xFA"
+    m_Localized: "Volver al men\xFA principal"
     m_Metadata:
       m_Items: []
   - m_Id: 12570519793344512
-    m_Localized: TODO:Restart level->spanish
+    m_Localized: Reinicie nivel
     m_Metadata:
       m_Items: []
   - m_Id: 12570714132226048
-    m_Localized: TODO:Exit to desktop->spanish
+    m_Localized: Salir al escritorio
     m_Metadata:
       m_Items: []
   - m_Id: 12570861499097088
-    m_Localized: TODO:Options->spanish
+    m_Localized: Ajustes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15409627787993088
+    m_Localized: Volver
     m_Metadata:
       m_Items: []
   references:

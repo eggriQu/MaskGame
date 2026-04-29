@@ -19,7 +19,7 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 101408186368
-    m_Localized: Jugar / Seleccionar nivel
+    m_Localized: Iniciar Juego / Seleccionar nivel
     m_Metadata:
       m_Items: []
   - m_Id: 445945094144
@@ -27,7 +27,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 463695388672
-    m_Localized: Pantalla completa
+    m_Localized: Alternar pantalla completa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15509391128961024
+    m_Localized: Instrucciones
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15510150537060352
+    m_Localized: "Cr\xE9ditos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15510970305388544
+    m_Localized: "Volver al men\xFA principal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 15521170915631104
+    m_Localized: Volver
     m_Metadata:
       m_Items: []
   references:

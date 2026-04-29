@@ -19,11 +19,11 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 14133108736
-    m_Localized: "\xA1T\xFA ganas!"
+    m_Localized: "\xA1Ganas!"
     m_Metadata:
       m_Items: []
   - m_Id: 130327912448
-    m_Localized: 'Borrar tiempo:'
+    m_Localized: 'Tiempo:'
     m_Metadata:
       m_Items: []
   - m_Id: 336691863552
