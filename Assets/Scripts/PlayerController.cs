@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float fallingGravity;
     [SerializeField] private float normalGravity;
     public bool isGrounded;
+    public bool isJumping;
     [SerializeField] private bool isSprinting;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float castDistance;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashTime;
     [SerializeField] private BoxCollider2D dashCollider;
     public bool isDead;
+    public bool usedBounce;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject knifeProjectile;
 
@@ -179,6 +181,7 @@ public class PlayerController : MonoBehaviour
 
     void Jump(InputAction.CallbackContext context)
     {
+        isJumping = true;
         if (isGrounded && !hasFalconSuperJump)
         {
             playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -191,20 +194,24 @@ public class PlayerController : MonoBehaviour
 
     void CancelJump(InputAction.CallbackContext context)
     {
+        isJumping = false;
         if (!isDashing)
         {
             playerRb.gravityScale = fallingGravity;
 
-            if (playerRb.linearVelocityY > 0 && !hasSkullMask)
+            if (!usedBounce)
             {
-                playerRb.linearVelocityY = 0;
-            }
-            else if ((playerRb.linearVelocityY > 0 || playerRb.linearVelocityY <= 0) && hasSkullMask)
-            {
-                playerRb.gravityScale = 0;
-                dashCollider.size = SetColliderSize(1.4f, 0.4f);
-                dashCollider.offset = SetColliderOffset(0, -1.2f);
-                playerRb.AddForce(Vector2.down * 35, ForceMode2D.Impulse);
+                if (playerRb.linearVelocityY > 0 && !hasSkullMask)
+                {
+                    playerRb.linearVelocityY = 0;
+                }
+                else if ((playerRb.linearVelocityY > 0 || playerRb.linearVelocityY <= 0) && hasSkullMask)
+                {
+                    playerRb.gravityScale = 0;
+                    dashCollider.size = SetColliderSize(1.8f, 0.8f);
+                    dashCollider.offset = SetColliderOffset(0, -0.6f);
+                    playerRb.AddForce(Vector2.down * 35, ForceMode2D.Impulse);
+                }
             }
         }
     }
@@ -257,6 +264,13 @@ public class PlayerController : MonoBehaviour
     public void PhaseWallPush(float forceMultipler)
     {
         playerRb.linearVelocity = playerVelocity.normalized * (dashForce * forceMultipler);
+        //playerRb.AddForce(playerVelocity.normalized * (dashForce * forceMultipler), ForceMode2D.Force);
+    }
+
+    public void BouncePad(Vector2 direction, float forceMultiplier)
+    {
+        playerRb.linearVelocity = Vector2.zero;
+        playerRb.AddForce(direction * forceMultiplier, ForceMode2D.Impulse);
     }
 
     private void Pause(InputAction.CallbackContext context)
@@ -301,10 +315,14 @@ public class PlayerController : MonoBehaviour
     {
         if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, groundLayer))
         {
-            if (!isDashing)
+            if (!isDashing || (hasSkullMask && !isGrounded))
             {
                 dashCollider.size = SetColliderSize(0.2f, 0.2f);
                 dashCollider.offset = SetColliderOffset(0, 0);
+            }
+            if (!isJumping && !isPhasing)
+            {
+                playerRb.linearVelocityY = 0;
             }
             return true;
         }
@@ -391,7 +409,7 @@ public class PlayerController : MonoBehaviour
             ref moveDirectionSmoothedVelocity,
             smoothDampTime);
 
-        if (!isDashing && !isDead)
+        if (!isDashing && !isDead && !usedBounce)
         {
             playerRb.linearVelocity = new Vector2(smoothedDirection.x * moveSpeed, playerRb.linearVelocityY);
         }

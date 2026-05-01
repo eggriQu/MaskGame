@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class PhaseWall : BaseObject
 {
-    private Color opaque = new Color(138, 43, 226, 255);
-    private Color transparent = new Color(138, 43, 226, 125);
+    [SerializeField] private Material phaseWallMat;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        //phaseWallMat = GetComponent<Material>();
     }
 
     // Update is called once per frame
@@ -21,24 +20,31 @@ public class PhaseWall : BaseObject
     public override void OnPlayerContact(PlayerController player)
     {
         base.OnPlayerContact(player);
-        if (player.hasPhaseMask && player.isDashing && player.playerVelocity != Vector2.zero)
+        if (player.isDashing && !objectCollider.isTrigger)
         {
+            player.isPhasing = true;
             StartCoroutine(PhaseTimer());
-            player.PhaseWallPush(0.65f);
+            player.PhaseWallPush(0.8f);
         }
-        else if (player.hasPhaseMask && player.isDashing && (player.playerVelocity.x == 0 || player.playerVelocity.y == 0))
+        else if (player.isDashing && objectCollider.isTrigger)
         {
-            StartCoroutine(PhaseTimer());
-            player.PhaseWallPush(1.05f);
+            player.isPhasing = true;
+            player.PhaseWallPush(0.8f);
         }
+    }
+
+    public override void OnPlayerExit(PlayerController player)
+    {
+        base.OnPlayerExit(player);
+        player.isPhasing = false;
     }
 
     private IEnumerator PhaseTimer()
     {
         objectCollider.isTrigger = true;
-        spriteRenderer.color = Color.white; 
+        spriteRenderer.material.SetFloat("_alpha", 0.5f);
         yield return new WaitForSeconds(1.5f);
-        spriteRenderer.color = Color.purple;
+        spriteRenderer.material.SetFloat("_alpha", 1);
         objectCollider.isTrigger = false;
     }
 }

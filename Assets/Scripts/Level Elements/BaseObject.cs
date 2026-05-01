@@ -9,6 +9,7 @@ public class BaseObject : MonoBehaviour, ILevelObject
 {
     [SerializeField] protected BoxCollider2D objectCollider;
     [SerializeField] protected SpriteRenderer spriteRenderer;
+    [SerializeField] protected bool continuousCollision;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -28,7 +29,7 @@ public class BaseObject : MonoBehaviour, ILevelObject
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && continuousCollision)
         {
             OnPlayerContact(collision.gameObject.GetComponent<PlayerController>());
         }
@@ -36,13 +37,26 @@ public class BaseObject : MonoBehaviour, ILevelObject
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && continuousCollision)
+        {
+            OnPlayerContact(collision.gameObject.GetComponentInParent<PlayerController>());
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && continuousCollision)
         {
             OnPlayerContact(collision.gameObject.GetComponentInParent<PlayerController>());
         }
     }
 
     public virtual void OnPlayerContact(PlayerController player)
+    {
+
+    }
+
+    public virtual void OnPlayerExit(PlayerController player)
     {
 
     }

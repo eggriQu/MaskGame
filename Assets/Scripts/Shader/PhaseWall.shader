@@ -3,6 +3,7 @@ Shader "Custom/PhaseWall"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _alpha("alpha",Range(0,1)) = 0.5
     }
     SubShader
     {
@@ -10,6 +11,9 @@ Shader "Custom/PhaseWall"
 
         Pass
         {
+            Blend SrcAlpha OneMinusSrcAlpha
+            ZWrite On
+            Cull off
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -34,6 +38,8 @@ Shader "Custom/PhaseWall"
             sampler2D _MainTex;
             float4 _MainTex_ST;
 
+            float _alpha;
+
             v2f vert (MeshData v)
             {
                 v2f o;
@@ -42,19 +48,20 @@ Shader "Custom/PhaseWall"
                 return o;
             }
 
-            fixed4 frag (v2f i) : SV_Target
+            float4 frag (v2f i) : SV_Target
             {
-                fixed4 texCol = tex2D(_MainTex, i.uv);
+                //fixed4 texCol = tex2D(_MainTex, i.uv);
+
+                float3 wallCol = float3(0.8,0,0.8);
                 
                 float2 centerUvs = i.uv * 2 - 1;
                 float radialDist = length(centerUvs);
                 
                 float t = cos((radialDist - _Time.y * 0.1f) * TAU * 5) * 0.5f + 1;
-                //t *= 1 - radialDist;
+                t *= 1 - radialDist;
        
                 
-                
-                return texCol * t;
+                return float4(wallCol.xyz * t,_alpha);
             }
             ENDCG
         }
