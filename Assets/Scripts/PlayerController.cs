@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour
             // EndPause();
             PauseManager.ResumeGame();
         }
-        else
+        else if (!PauseManager.isGamePaused && !LevelManager.Instance.GetCurrentLevelCompleted())
         {
             // StartPause();
             PauseManager.PauseGame();

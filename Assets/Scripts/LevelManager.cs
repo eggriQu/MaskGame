@@ -46,6 +46,7 @@ public class LevelManager : MonoBehaviour
         StageCollectable.CollectableCollected += IncrementCollectableCounter;
         ReloadSceneButton.OnReloadSceneButtonPressed += ReloadScene;
         LoadSceneButton.OnLoadSceneButtonPressed += LoadScene;
+        NextSceneButton.OnLoadSceneButtonPressed += LoadScene;
 
         SceneManager.sceneLoaded += OnNewSceneLoaded;
     }
@@ -55,6 +56,7 @@ public class LevelManager : MonoBehaviour
         StageCollectable.CollectableCollected -= IncrementCollectableCounter;
         ReloadSceneButton.OnReloadSceneButtonPressed -= ReloadScene;
         LoadSceneButton.OnLoadSceneButtonPressed -= LoadScene;
+        NextSceneButton.OnLoadSceneButtonPressed -= LoadScene;
         
         SceneManager.sceneLoaded -= OnNewSceneLoaded;
     }

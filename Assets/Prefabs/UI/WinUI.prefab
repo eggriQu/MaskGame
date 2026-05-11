@@ -1143,6 +1143,7 @@ GameObject:
   - component: {fileID: 859542487709970037}
   - component: {fileID: 8198037214161883283}
   - component: {fileID: 2534429765047121191}
+  - component: {fileID: 8661708699314273047}
   m_Layer: 0
   m_Name: NextLevel
   m_TagString: Untagged
@@ -1250,7 +1251,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8198037214161883283}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8661708699314273047}
+        m_TargetAssemblyTypeName: NextSceneButton, Assembly-CSharp
+        m_MethodName: OnClickMenuButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8661708699314273047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6754588644807107477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0404b8c2aa2c0f4d9971844bb313e10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NextSceneButton
 --- !u!1 &6774391245618575770
 GameObject:
   m_ObjectHideFlags: 0
