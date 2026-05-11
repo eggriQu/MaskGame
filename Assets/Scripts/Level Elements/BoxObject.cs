@@ -7,7 +7,6 @@ public class BoxObject : BaseObject
     private BoxCollider2D CollisionBox;
     private AudioSource BreakSound;
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,7 +37,7 @@ public class BoxObject : BaseObject
     public override void OnPlayerContact(PlayerController player)
     {
         //base.OnPlayerContact(player);
-        if (player.hasSkullMask && !player.isGrounded)
+        if (player.hasSkullMask)
         {
             StartCoroutine(Die());
         }

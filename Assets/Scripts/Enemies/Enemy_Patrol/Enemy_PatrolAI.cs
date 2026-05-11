@@ -13,6 +13,8 @@ public class Enemy_PatrolAI : MonoBehaviour, ILevelObject
     [SerializeField] private Animator anim;
     [SerializeField] private BoxCollider2D boxCollider;
 
+    private SpriteRenderer spriteRenderer;
+
     private int listIndex = 0;
 
     private readonly float destinationTolerance = 0.1f;
@@ -20,6 +22,8 @@ public class Enemy_PatrolAI : MonoBehaviour, ILevelObject
 
     private void Start()
     {
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
         if (patrolPoints.Count > 1)
         {
             currentTargetDest = patrolPoints[listIndex];
@@ -41,6 +45,15 @@ public class Enemy_PatrolAI : MonoBehaviour, ILevelObject
         else if (stunned)
         {
 
+        }
+
+        if (currentTargetDest.position.x > transform.position.x)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else
+        {
+            spriteRenderer.flipX = true;
         }
     }
 

@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float fallingGravity;
     [SerializeField] private float normalGravity;
+    [SerializeField] private float coyoteTime = 0.2f;
+    [SerializeField] private float jumpBufferTime = 0.2f;
+    [SerializeField] private float coyoteTimeCounter;
+    [SerializeField] private float jumpBufferCounter;
     public bool isGrounded;
     public bool isJumping;
     [SerializeField] private bool isSprinting;
@@ -182,19 +186,41 @@ public class PlayerController : MonoBehaviour
     void Jump(InputAction.CallbackContext context)
     {
         isJumping = true;
-        if (isGrounded && !hasFalconSuperJump)
+        jumpBufferCounter = jumpBufferTime;
+        if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f && !hasFalconSuperJump)
         {
-            playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            if (isGrounded)
+            {
+                playerRb.linearVelocityY = 0;
+                playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            }
+            else
+            {
+                playerRb.linearVelocityY = 0;
+                playerRb.AddForce(Vector2.up * jumpForce * 1.35f, ForceMode2D.Impulse);
+            }
+            jumpBufferCounter = 0;
         }
-        else if (isGrounded && hasFalconSuperJump)
+        else if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f && hasFalconSuperJump)
         {
-            playerRb.AddForce(Vector2.up * jumpForce * falconJumpMultiplier, ForceMode2D.Impulse);
+            if (isGrounded)
+            {
+                playerRb.linearVelocityY = 0;
+                playerRb.AddForce(Vector2.up * jumpForce * falconJumpMultiplier, ForceMode2D.Impulse);
+            }
+            else
+            {
+                playerRb.linearVelocityY = 0;
+                playerRb.AddForce(Vector2.up * jumpForce * falconJumpMultiplier * 1.35f, ForceMode2D.Impulse);
+            }
+            jumpBufferCounter = 0;
         }
     }
 
     void CancelJump(InputAction.CallbackContext context)
     {
         isJumping = false;
+        coyoteTimeCounter = 0f;
         if (!isDashing)
         {
             playerRb.gravityScale = fallingGravity;
@@ -351,6 +377,24 @@ public class PlayerController : MonoBehaviour
         if (PauseManager.isGamePaused) return;
 
         isGrounded = GroundCheck();
+
+        if (isGrounded)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
+        if (isJumping)
+        {
+            jumpBufferCounter = jumpBufferTime;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
 
         if (isGrounded && !isDashing && !hasFalconSuperJump)
         {

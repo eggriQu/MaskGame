@@ -19,6 +19,7 @@ public class Enemy_FollowAI : MonoBehaviour, ILevelObject
     public float timeUntilSpawn;
     [SerializeField] GameObject player;
     [SerializeField] private Animator anim;
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class Enemy_FollowAI : MonoBehaviour, ILevelObject
         isFollowing = false;
 
         player = GameObject.Find("Player");
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
     private void FixedUpdate()
     {
@@ -43,6 +45,15 @@ public class Enemy_FollowAI : MonoBehaviour, ILevelObject
         else
         {
             
+        }
+
+        if (curveX.Evaluate(recordTime * 2) > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (curveX.Evaluate(recordTime * 2) < 0)
+        {
+            spriteRenderer.flipX = true;
         }
     }
     private void Update()
