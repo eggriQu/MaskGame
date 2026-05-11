@@ -104,7 +104,7 @@ public class BestTimeSaveSystem : MonoBehaviour
         }
         else
         {
-            return 1000f;
+            return 1e30f;
         }
         
     }
