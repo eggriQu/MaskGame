@@ -47,6 +47,7 @@ public class LevelManager : MonoBehaviour
         ReloadSceneButton.OnReloadSceneButtonPressed += ReloadScene;
         LoadSceneButton.OnLoadSceneButtonPressed += LoadScene;
         NextSceneButton.OnLoadSceneButtonPressed += LoadScene;
+        ExitGameButton.OnExitGameButtonPressed += ExitGame;
 
         SceneManager.sceneLoaded += OnNewSceneLoaded;
     }
@@ -57,6 +58,7 @@ public class LevelManager : MonoBehaviour
         ReloadSceneButton.OnReloadSceneButtonPressed -= ReloadScene;
         LoadSceneButton.OnLoadSceneButtonPressed -= LoadScene;
         NextSceneButton.OnLoadSceneButtonPressed -= LoadScene;
+        ExitGameButton.OnExitGameButtonPressed -= ExitGame;
         
         SceneManager.sceneLoaded -= OnNewSceneLoaded;
     }
@@ -76,6 +78,11 @@ public class LevelManager : MonoBehaviour
     public void ReloadScene()
     {
         StartCoroutine(ReloadSceneCoroutine());
+    }
+
+    private void ExitGame()
+    {
+        StartCoroutine(ExitGameCoroutine());
     }
     
     private IEnumerator FadeToBlack(float duration)
@@ -148,6 +155,15 @@ public class LevelManager : MonoBehaviour
     
     }
 
+    private IEnumerator ExitGameCoroutine()
+    {
+        PauseManager.ResumeGame();
+        
+        yield return FadeToBlack(0.5f);
+        
+        Application.Quit();
+    }
+
     private void ResetLevelManagerState()
     {
         CurrentCollectables = 0;
@@ -207,8 +223,8 @@ public class LevelManager : MonoBehaviour
     }
 
     public void FindPostProcess()
-    {
-              FadePostProcess = Camera.main.GetComponent<FadePostProcess>();
+    { 
+      FadePostProcess = Camera.main.GetComponent<FadePostProcess>();
     }
 
     
