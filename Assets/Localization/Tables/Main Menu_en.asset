@@ -46,6 +46,70 @@ MonoBehaviour:
     m_Localized: Back
     m_Metadata:
       m_Items: []
+  - m_Id: 22412969064046592
+    m_Localized: How to play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22413098256998400
+    m_Localized: Steal the gems
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22413443746013184
+    m_Localized: Avoid the guards
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22413663682732032
+    m_Localized: Reach the exit of each level as fast as possible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22414019397459968
+    m_Localized: Run faster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22414166516867072
+    m_Localized: Jump higher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22414320418463744
+    m_Localized: Phase through walls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22414516653170688
+    m_Localized: Break through walls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22414960095961088
+    m_Localized: Stun the guards
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22415289931833344
+    m_Localized: Use mask ability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22416664396865536
+    m_Localized: Move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22416888364310528
+    m_Localized: Run
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22417004915630080
+    m_Localized: Jump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22421196644327424
+    m_Localized: Programming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22421386474332160
+    m_Localized: Art
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22421509572960256
+    m_Localized: Level design
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

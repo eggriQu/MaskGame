@@ -43,6 +43,70 @@ MonoBehaviour:
     m_Key: Back_Key
     m_Metadata:
       m_Items: []
+  - m_Id: 22412969064046592
+    m_Key: HowToPlay_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22413098256998400
+    m_Key: Steal_key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22413443746013184
+    m_Key: Avoid_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22413663682732032
+    m_Key: ReachExit_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22414019397459968
+    m_Key: FoxDesc_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22414166516867072
+    m_Key: FalconDesc_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22414320418463744
+    m_Key: PhaseDesc_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22414516653170688
+    m_Key: SkullDesc_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22414960095961088
+    m_Key: KnifeDesc_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22415289931833344
+    m_Key: UseAbility_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22416664396865536
+    m_Key: Move_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22416888364310528
+    m_Key: Sprint_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22417004915630080
+    m_Key: Jump_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22421196644327424
+    m_Key: Programming_Key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22421386474332160
+    m_Key: Art_key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22421509572960256
+    m_Key: LevelDesign_Key
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
