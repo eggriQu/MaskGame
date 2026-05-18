@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     private static LevelManager _instance; 
     public static LevelManager Instance {get{return _instance;}}
 
-    private bool HasSplashScreenPlayed;
+
 
     private int CurrentCollectables = 0;
 
@@ -175,13 +175,9 @@ public class LevelManager : MonoBehaviour
 
     private void OnNewSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "MainMenu" && !HasSplashScreenPlayed) return;
-        
         FindPostProcess();
                     
         StartCoroutine(FadeFromBlack(0.5f));
-        
-        
     }
     
     
@@ -212,15 +208,6 @@ public class LevelManager : MonoBehaviour
         currentLevelCompleted = completed;
     }
 
-    public bool GetHasSplashScreenPlayed()
-    {
-        return HasSplashScreenPlayed;
-    }
-
-    public void SetHasSplashScreenPlayed(bool played)
-    {
-        HasSplashScreenPlayed = played;
-    }
 
     public void FindPostProcess()
     { 
