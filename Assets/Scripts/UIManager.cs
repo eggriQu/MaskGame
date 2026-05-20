@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -31,7 +32,6 @@ public class UIManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            _instance = this;
             Destroy(this.gameObject);
         }
         else
@@ -45,12 +45,16 @@ public class UIManager : MonoBehaviour
     {
         LevelExit.OnLevelExit += InstantiateWinUI;
         PauseManager.OnGamePaused += EnableDisablePauseUI;
+
+        SceneManager.sceneLoaded += FindPlayerUI;
     }
 
     private void OnDisable()
     {
         LevelExit.OnLevelExit -= InstantiateWinUI;
         PauseManager.OnGamePaused -= EnableDisablePauseUI;
+        
+        SceneManager.sceneLoaded -= FindPlayerUI;
     }
 
     public void SetMaskIcon(Mask mask)
@@ -92,29 +96,30 @@ public class UIManager : MonoBehaviour
 
     public void EnableDisablePauseUI(bool isPaused)
     {
-        if (PauseMenuUI == null)
-        {
-            PauseMenuUI = Instantiate(PauseMenuPrefab);
-        }
-        else
-        {
-            Destroy(PauseMenuUI);
-        }
-    
         if (isPaused)
         {
-           // PauseScreen.enabled = true; 
-         //   PauseBackground.enabled = true;
-            PauseMenuUI.SetActive(true);
+            if (!PauseMenuUI)
+            { 
+              PauseMenuUI = Instantiate(PauseMenuPrefab);
+              Debug.Log("Pause Menu UI Instantiated");
+            }
             SetCursorState(true, CursorLockMode.None);
         }
         else
         {
-          //  PauseScreen.enabled = false; 
-         //   PauseBackground.enabled = false;
-             PauseMenuUI.SetActive(false);
+            if (PauseMenuUI)
+            {
+                Destroy(PauseMenuUI);
+            }
             SetCursorState(false, CursorLockMode.Locked);
         }
+    }
+
+    private void FindPlayerUI(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.buildIndex == 0){return;}
+        maskIcon = GameObject.Find("Current Mask Icon").GetComponent<Image>();
+        maskDurabilityText = GameObject.Find("Durability Text").GetComponent<TextMeshProUGUI>();
     }
 
     public static void SetCursorState(bool visible, CursorLockMode cursorLockMode)

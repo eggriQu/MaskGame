@@ -13,7 +13,7 @@ public static class PauseManager
         isGamePaused = true;
         Time.timeScale = 0;
         OnGamePaused?.Invoke(isGamePaused);
-        Debug.Log("PauseGame");
+       // Debug.Log("PauseGame");
     }
 
     public static void ResumeGame()
@@ -21,21 +21,21 @@ public static class PauseManager
         isGamePaused = false;
         Time.timeScale = 1;
         OnGamePaused?.Invoke(isGamePaused);
-        Debug.Log("ResumeGame");
+       // Debug.Log("ResumeGame");
     }
     
     public static void PauseLevel()
     {
         isLevelPaused = true;
         OnLevelPaused?.Invoke(isLevelPaused);
-        Debug.Log("PauseLevel");
+        //Debug.Log("PauseLevel");
     }
 
     public static void ResumeLevel()
     {
         isLevelPaused = false;
         OnLevelPaused?.Invoke(isLevelPaused);
-        Debug.Log("ResumeLevel");
+       // Debug.Log("ResumeLevel");
     }
     
     

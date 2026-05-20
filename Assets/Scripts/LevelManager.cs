@@ -123,6 +123,7 @@ public class LevelManager : MonoBehaviour
     
     private IEnumerator LoadSceneCoroutine(string sceneName)
     {
+       
         PauseManager.ResumeGame();
     
         yield return FadeToBlack(0.5f);
