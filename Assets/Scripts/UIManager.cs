@@ -96,6 +96,10 @@ public class UIManager : MonoBehaviour
         {
             PauseMenuUI = Instantiate(PauseMenuPrefab);
         }
+        else
+        {
+            Destroy(PauseMenuUI);
+        }
     
         if (isPaused)
         {
