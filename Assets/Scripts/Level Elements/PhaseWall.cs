@@ -20,16 +20,19 @@ public class PhaseWall : BaseObject
     public override void OnPlayerContact(PlayerController player)
     {
         base.OnPlayerContact(player);
-        if (player.isDashing && !objectCollider.isTrigger)
+        if (player.isDashing)
         {
-            player.isPhasing = true;
-            StartCoroutine(PhaseTimer());
-            player.PhaseWallPush(0.8f);
-        }
-        else if (player.isDashing && objectCollider.isTrigger)
-        {
-            player.isPhasing = true;
-            player.PhaseWallPush(0.8f);
+            if (!objectCollider.isTrigger)
+            {
+                player.isPhasing = true;
+                StartCoroutine(PhaseTimer());
+                player.PhaseWallPush(0.6f);
+            }
+            else if (objectCollider.isTrigger)
+            {
+                player.isPhasing = true;
+                player.PhaseWallPush(0.6f);
+            }
         }
     }
 

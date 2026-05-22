@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     public bool usedBounce;
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject knifeProjectile;
+    [SerializeField] private GameObject latestGround;
 
     private Vector3 pauseStoredVelocity;
     private float pauseStoredAngularVelocity;
@@ -126,10 +127,10 @@ public class PlayerController : MonoBehaviour
 
 
     }
-    
+
     private void OnDisable()
     {
-   
+
 
         move.Disable();
         move.performed -= Move;
@@ -151,22 +152,22 @@ public class PlayerController : MonoBehaviour
 
         //PauseManager.OnGamePaused += OnPause;
 
-    
+
 
     }
-    
+
 
     void Move(InputAction.CallbackContext context)
     {
         if (PauseManager.isLevelPaused && LevelManager.Instance.GetCurrentLevelCompleted() == true) return;
-       
-    
+
+
         if (PauseManager.isLevelPaused && LevelManager.Instance.GetCurrentLevelCompleted() != true)
         {
             PauseManager.ResumeLevel();
-        }       
-        
-       
+        }
+
+
         if (!hasSkullMask)
         {
             moveDirection = context.ReadValue<Vector2>();
@@ -221,12 +222,12 @@ public class PlayerController : MonoBehaviour
     {
         isJumping = false;
         coyoteTimeCounter = 0f;
-        if (!isDashing)
+        if (!latestGround.CompareTag("Bounce Pad"))
         {
-            playerRb.gravityScale = fallingGravity;
-
-            if (!usedBounce)
+            if (!isDashing)
             {
+                playerRb.gravityScale = fallingGravity;
+
                 if (playerRb.linearVelocityY > 0 && !hasSkullMask)
                 {
                     playerRb.linearVelocityY = 0;
@@ -369,6 +370,8 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(Die());
         }
+
+        latestGround = collision.gameObject;
     }
 
     // Update is called once per frame
@@ -424,23 +427,32 @@ public class PlayerController : MonoBehaviour
         }
 
         SetMaskSprite(currentMask);
-        if (moveDirection.x != 0 && Time.timeScale != 0 && !isSprinting)
+        
+        if (isGrounded)
         {
-            anim.Play("Unmasked_Walk");
-            maskAnim.Play("Mask_Walk");
-        }
-        else if (moveDirection.x != 0 && Time.timeScale != 0 && isSprinting)
-        {
-            anim.Play("Unmasked_Run");
-            maskAnim.Play("Mask_Run");
+            if (moveDirection.x != 0 && Time.timeScale != 0 && !isSprinting)
+            {
+                anim.Play("Unmasked_Walk");
+                maskAnim.Play("Mask_Walk");
+            }
+            else if (moveDirection.x != 0 && Time.timeScale != 0 && isSprinting)
+            {
+                anim.Play("Unmasked_Run");
+                maskAnim.Play("Mask_Run");
+            }
+            else
+            {
+                anim.Play("Unmasked_Idle");
+                maskAnim.Play("Mask_Idle");
+            }
         }
         else
         {
-            anim.Play("Unmasked_Idle");
-            maskAnim.Play("Mask_Idle");
+            anim.Play("Unmasked_Jump");
+            maskAnim.Play("Mask_Jump");
         }
     }
-    
+
 
     private void FixedUpdate()
     {
