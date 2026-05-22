@@ -26,16 +26,17 @@ public class SetupWinUI : MonoBehaviour
       {
          Debug.Log(loadedBestTime);
          var bestTimespan = TimeSpan.FromSeconds(loadedBestTime);
-         bestTimeTime.text = ($"{bestTimespan.TotalMinutes:00}:{bestTimespan.Seconds:00}");
+         bestTimeTime.text = ($"{bestTimespan.Minutes:00}:{bestTimespan.Seconds:00}");
       }
       
      
      
      
       endTime = LevelManager.Instance.GetCurrentLevelTime();
+
       
       var endTimespan = TimeSpan.FromSeconds(endTime);
-      clearTimeTime.text = ($"{endTimespan.TotalMinutes:00}:{endTimespan.Seconds:00}");
+      clearTimeTime.text = ($"{endTimespan.Minutes:00}:{endTimespan.Seconds:00}");
 
       for (int i = 0; i < collectableCount; i++)
       {
